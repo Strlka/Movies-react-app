@@ -8,7 +8,7 @@ import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <Provider forcedTheme="dark">
+    <Provider>
         <App />
     </Provider>
   </React.StrictMode>,

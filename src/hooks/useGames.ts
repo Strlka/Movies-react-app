@@ -3,10 +3,11 @@ import apiClient from "../services/api-client";
 import { useEffect, useState } from "react";
 
 
-interface Movie {
+export interface Movie {
     id: number,
     title: string,
     vote_average: number,
+    backdrop_path: string,
 }
 
 interface FetchGamesResponse {

@@ -7,25 +7,29 @@ export interface Movie {
     id: number,
     title: string,
     vote_average: number,
+    poster_path: string,
+    genre_ids: number[],
     backdrop_path: string,
+    overview: string,
+    
 }
 
-interface FetchGamesResponse {
-    count: number;
+interface FetchMoviesResponse {
+    page: number;
     results: Movie[];
 }    
 
 
-const useGames = () => {
+const useMovies = () => {
 
-    const [games, setGames] = useState<Movie[]>([]);
+    const [movies, setGames] = useState<Movie[]>([]);
     const [error, setError] = useState('');
 
     useEffect( () => {
 
         const controller = new AbortController();
         
-        apiClient.get<FetchGamesResponse>('/3/movie/top_rated', {signal: controller.signal})
+        apiClient.get<FetchMoviesResponse>('/3/movie/top_rated', {signal: controller.signal})
             .then(res => setGames(res.data.results))
             .catch(err => {
                 if (err instanceof CanceledError) return;
@@ -36,8 +40,8 @@ const useGames = () => {
 
     }, []);
 
-    return { games, error };
+    return { movies, error };
 
 }
 
-export default useGames
+export default useMovies

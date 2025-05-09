@@ -1,6 +1,7 @@
 import { Box, Button, Card, CardBody, Heading, Image, Text } from "@chakra-ui/react"
 import { Movie } from "../hooks/useMovies"
 import { Genre, getGenresName } from "../hooks/useGenres";
+import { getPosterUrl } from "../services/image-url";
 
 
 interface MoviePage {
@@ -23,7 +24,7 @@ const MoviePage = ({movie, genres, backToMoviesCards}: MoviePage) => {
   >
       <Box>
         <Heading fontSize='4xl'>{movie.title}</Heading>
-        <Image src={`https://image.tmdb.org/t/p/w780${movie.backdrop_path})`} marginY={10} />
+        <Image src={getPosterUrl(movie.backdrop_path)} marginY={10} />
         <Text>{movie.vote_average}</Text>
         <Text>{genresList.join(', ')}</Text>
         <Text>{movie.overview}</Text>

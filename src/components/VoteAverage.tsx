@@ -1,4 +1,4 @@
-import { Badge } from '@chakra-ui/react';
+import { AbsoluteCenter, ProgressCircle } from '@chakra-ui/react';
 
 
 interface Props {
@@ -9,10 +9,18 @@ const VoteAverage = ({vote_average}: Props) => {
 
     const score = Math.round(vote_average*10)
 
-    let color = score > 75 ? 'green.400' : score > 60 ? 'yellow.300' : 'gray.300';
+    let color = score > 70 ? 'green.400' : score > 55 ? 'yellow.300' : 'red.500';
   
     return (
-    <Badge fontSize='lg'padding={2} borderRadius='full' aspectRatio={1} shadow='md' borderColor={color} borderWidth={3}>{score}%</Badge>
+      <ProgressCircle.Root size='lg' value={score}>
+        <ProgressCircle.Circle {...{ "--thickness": "4px" }}>
+          <ProgressCircle.Track />
+          <ProgressCircle.Range {...{strokeLinecap: "round", stroke: color }} />
+        </ProgressCircle.Circle>
+        <AbsoluteCenter>
+          <ProgressCircle.ValueText />
+        </AbsoluteCenter>
+      </ProgressCircle.Root>
   )
 }
 

@@ -29,7 +29,7 @@ const useMovies = () => {
 
         const controller = new AbortController();
         
-        apiClient.get<FetchMoviesResponse>('/3/movie/top_rated', {signal: controller.signal})
+        apiClient.get<FetchMoviesResponse>('/3/movie/now_playing', {signal: controller.signal})
             .then(res => setGames(res.data.results))
             .catch(err => {
                 if (err instanceof CanceledError) return;

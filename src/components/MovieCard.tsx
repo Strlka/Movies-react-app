@@ -17,7 +17,7 @@ const MovieCard = ({movie, genres, onClick}: Props) => {
 const genresList = getGenresName(movie.genre_ids, genres);
 
   return (
-    <Card.Root borderRadius={10} overflow='hidden'>
+    <Card.Root>
       <Image src={getImageUrl(movie.poster_path)} cursor='pointer' onClick={onClick}/>
       <CardBody>
         <HStack justify='space-between'>

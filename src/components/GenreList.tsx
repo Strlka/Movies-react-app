@@ -1,9 +1,14 @@
-import { Badge, List, ListItem } from '@chakra-ui/react';
+import { Badge, List, ListItem, Spinner } from '@chakra-ui/react';
 import useGenres from '../hooks/useGenres'
 
 
 const GenreList = () => {
-    const {genres} = useGenres();
+    const {genres, isLoading, error} = useGenres();
+
+    if (error) return null;
+
+    if (isLoading) return <Spinner />;
+
   return (
     <List.Root listStyleType='none'>
       {genres.map(genre => <List.Item key={genre.id} paddingY='5px'>

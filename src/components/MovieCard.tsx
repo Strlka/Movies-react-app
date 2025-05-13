@@ -27,7 +27,10 @@ let date = new Date(movie.release_date);
           <VoteAverage vote_average={movie.vote_average} />
         </HStack>
         <Text marginY={1}>{genresList.join(', ')}</Text>
-        <Text marginY={1}>{date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</Text>
+        <HStack justify='space-between'>
+          <Text marginY={1}>{date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</Text>
+          <Text>{movie.original_language}</Text>
+        </HStack>
       </CardBody>
     </Card.Root>
   )

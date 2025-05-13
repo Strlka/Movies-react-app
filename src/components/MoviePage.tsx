@@ -1,7 +1,9 @@
-import { Box, Button, Card, CardBody, Heading, Image, Text } from "@chakra-ui/react"
+import { Box, Button, Heading, Image, Text } from "@chakra-ui/react"
 import { Movie } from "../hooks/useMovies"
 import { Genre, getGenresName } from "../hooks/useGenres";
 import { getPosterUrl } from "../services/image-url";
+import ProvidersIconList from "./ProvidersIconList";
+import VoteAverage from "./VoteAverage";
 
 
 interface MoviePage {
@@ -16,7 +18,6 @@ const MoviePage = ({movie, genres, backToMoviesCards}: MoviePage) => {
 
   return (
     <Box
-    borderRadius={10}
     overflow='hidden'
     position="relative"
     alignItems="center"
@@ -25,9 +26,10 @@ const MoviePage = ({movie, genres, backToMoviesCards}: MoviePage) => {
       <Box>
         <Heading fontSize='4xl'>{movie.title}</Heading>
         <Image src={getPosterUrl(movie.backdrop_path)} marginY={10} />
-        <Text>{movie.vote_average}</Text>
-        <Text>{genresList.join(', ')}</Text>
-        <Text>{movie.overview}</Text>
+        <VoteAverage vote_average={movie.vote_average} />
+        <Text marginY={5}>{genresList.join(', ') }</Text>
+        <Text maxWidth='750px' marginY={5}>{movie.overview}</Text>
+        <ProvidersIconList movie_id={movie.id}/>
         <Button onClick={backToMoviesCards} marginTop={5}>Back to movies list</Button>
       </Box>
     </Box>

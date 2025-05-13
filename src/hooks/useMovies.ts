@@ -22,19 +22,28 @@ interface FetchMoviesResponse {
 
 const useMovies = () => {
 
-    const [movies, setGames] = useState<Movie[]>([]);
+    const [movies, setMovies] = useState<Movie[]>([]);
     const [error, setError] = useState('');
     const [isLoading, setLoading] = useState(false);
 
-    useEffect( () => {
+    const pages = [1, 2, 3, 4, 5];
+
+
+    useEffect(() => {
 
         const controller = new AbortController();
 
         setLoading(true);
+
+        pages.forEach(page => {
         
-        apiClient.get<FetchMoviesResponse>('/3/movie/now_playing', {signal: controller.signal})
+        apiClient.get<FetchMoviesResponse>('/3/discover/movie', {signal: controller.signal, params: {page: page}})
             .then(res => {
-                setGames(res.data.results);
+                setMovies(prevMovies => {
+                    const newMovies = [...prevMovies, ...res.data.results];
+                    const unique = Array.from(new Map(newMovies.map(m => [m.id, m])).values());
+                    return unique;
+            });
                 setLoading(false);
             })
             .catch(err => {
@@ -42,9 +51,9 @@ const useMovies = () => {
                 setError(err.message);
                 setLoading(false);
             });
+        });    
         
-        return () => controller.abort(); 
-
+        return () => controller.abort();
     }, []);
 
     return { movies, error, isLoading };

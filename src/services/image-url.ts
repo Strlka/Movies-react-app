@@ -10,3 +10,10 @@ export const getPosterUrl = (path: string) => {
     const posterUrl = baseUrl + path;
     return posterUrl
 }
+
+export const getProviderImageUrl = (path: string) => {
+    const baseUrl = 'https://media.themoviedb.org/t/p/original';
+    const imageUrl = baseUrl + path;
+    return imageUrl
+}
+

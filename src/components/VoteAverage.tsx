@@ -9,7 +9,7 @@ const VoteAverage = ({vote_average}: Props) => {
 
     const score = Math.round(vote_average*10)
 
-    let color = score > 70 ? 'green.400' : score > 55 ? 'yellow.300' : 'red.500';
+    const color = score > 70 ? 'green.400' : score > 55 ? 'yellow.300' : 'red.500';
   
     return (
       <ProgressCircle.Root size='lg' value={score}>

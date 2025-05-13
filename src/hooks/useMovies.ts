@@ -11,6 +11,7 @@ export interface Movie {
     genre_ids: number[],
     backdrop_path: string,
     overview: string,
+    release_date: string,
     
 }
 

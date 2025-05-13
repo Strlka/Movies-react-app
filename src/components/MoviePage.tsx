@@ -15,6 +15,7 @@ interface MoviePage {
 const MoviePage = ({movie, genres, backToMoviesCards}: MoviePage) => {
 
     const genresList = getGenresName(movie.genre_ids, genres);
+    let date = new Date(movie.release_date);
 
   return (
     <Box
@@ -28,6 +29,7 @@ const MoviePage = ({movie, genres, backToMoviesCards}: MoviePage) => {
         <Image src={getPosterUrl(movie.backdrop_path)} marginY={10} />
         <VoteAverage vote_average={movie.vote_average} />
         <Text marginY={5}>{genresList.join(', ') }</Text>
+        <Text marginY={5}>{date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</Text>
         <Text maxWidth='750px' marginY={5}>{movie.overview}</Text>
         <ProvidersIconList movie_id={movie.id}/>
         <Button onClick={backToMoviesCards} marginTop={5}>Back to movies list</Button>

@@ -16,6 +16,8 @@ const MovieCard = ({movie, genres, onClick}: Props) => {
 
 const genresList = getGenresName(movie.genre_ids, genres);
 
+let date = new Date(movie.release_date);
+
   return (
     <Card.Root>
       <Image src={getImageUrl(movie.poster_path)} cursor='pointer' onClick={onClick}/>
@@ -25,6 +27,7 @@ const genresList = getGenresName(movie.genre_ids, genres);
           <VoteAverage vote_average={movie.vote_average} />
         </HStack>
         <Text marginY={1}>{genresList.join(', ')}</Text>
+        <Text marginY={1}>{date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</Text>
       </CardBody>
     </Card.Root>
   )

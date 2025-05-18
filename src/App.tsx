@@ -5,16 +5,20 @@ import GenreList from "./components/GenreList";
 import { useState } from "react";
 import { Genre } from "./hooks/useGenres";
 import ProviderSelector from "./components/ProviderSelector";
+import { Provider } from "./hooks/useAllProviders";
 
+
+export interface MovieQuery {
+  genre: Genre | null;
+  provider: Provider | null;
+}
 
 
 function App() {
 
   const showAside = useBreakpointValue({ base: false, lg: true });
 
-  const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
-  const [selectedProvider, setSelectedProvider] =useState<number | null>(null);
-
+  const [movieQuery, setMovieQuery] = useState<MovieQuery>({} as MovieQuery);
 
 
   return (
@@ -31,11 +35,11 @@ function App() {
         <NavBar />
       </GridItem>
       {showAside && <GridItem area='aside' paddingX='10px'>
-        <GenreList onSelectGenre={(genre) => setSelectedGenre(genre)} selectedGenre={selectedGenre}  />
+        <GenreList onSelectGenre={(genre) => setMovieQuery({...movieQuery, genre})} selectedGenre={movieQuery.genre}  />
       </GridItem>}
       <GridItem area='main'>
-        <ProviderSelector onSelectProvider={(p) => setSelectedProvider(p)} selectedProvider={selectedProvider}/>
-        <MovieGrid selectedGenre={selectedGenre} selectedProvider={selectedProvider}/>
+        <ProviderSelector onSelectProvider={(provider) => setMovieQuery({...movieQuery, provider})} selectedProvider={movieQuery.provider}/>
+        <MovieGrid movieQuery={movieQuery} />
       </GridItem>
 
     </Grid>

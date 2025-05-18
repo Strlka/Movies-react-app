@@ -6,18 +6,19 @@ import MoviePage from './MoviePage';
 import { useState } from 'react';
 import MovieCardSkeleton from './MovieCardSkeleton';
 import MovieCardContainer from './MovieCardContainer';
+import { Provider } from '@/hooks/useAllProviders';
+import {MovieQuery} from '../App';
 
 
 
 interface Props {
-  selectedGenre: Genre | null;
-  selectedProvider: number | null;
+  movieQuery: MovieQuery;
 }
 
 
-const MovieGrid = ({selectedGenre, selectedProvider}: Props) => {
+const MovieGrid = ({movieQuery}: Props) => {
     
-  const {movies, error, isLoading} = useMovies(selectedGenre ? `${selectedGenre?.id}` : undefined, selectedProvider ? `${selectedProvider}` : undefined);
+  const {movies, error, isLoading} = useMovies(movieQuery.genre ? String(movieQuery.genre.id) : undefined, movieQuery.provider ? String(movieQuery.provider.provider_id) : undefined);
   const {genres} = useGenres();
 
 
@@ -31,7 +32,7 @@ const MovieGrid = ({selectedGenre, selectedProvider}: Props) => {
     setShowMoviePage(false);
   }
 
-  const filtersApplied = selectedGenre !== null || selectedProvider !== null;
+  const filtersApplied = movieQuery.genre !== null || movieQuery.provider !== null;
 
 
   return (

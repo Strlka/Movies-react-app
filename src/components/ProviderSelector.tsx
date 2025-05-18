@@ -1,11 +1,11 @@
 import { Button, Portal, Menu } from '@chakra-ui/react'
 import { BsChevronDown } from 'react-icons/bs'
 import { useColorModeValue } from './ui/color-mode';
-import useAllProviders, { getProvidersWithId } from '../hooks/useAllProviders';
+import useAllProviders, { getProvidersWithId, Provider } from '../hooks/useAllProviders';
 
 interface Props {
-  onSelectProvider: (p: number) => void;
-  selectedProvider: number | null;
+  onSelectProvider: (p: Provider) => void;
+  selectedProvider: Provider | null;
 }
 
 
@@ -47,15 +47,13 @@ const ProviderSelector = ({onSelectProvider, selectedProvider}: Props) => {
 
     if (error) return null;
 
-    let label;
-    selectedProvider ? label = providersList.find(p => p.provider_id === selectedProvider)?.provider_name : label = 'Providers';
 
 
   return (
     <Menu.Root>
       <Menu.Trigger asChild>
         <Button variant='plain' size="lg" borderRadius='5px' cursor='pointer' _hover={{color: 'teal.400' }} >
-        {label}
+        {selectedProvider ? selectedProvider.provider_name : 'Providers'}
           <BsChevronDown / >
         </Button>
       </Menu.Trigger>
@@ -63,7 +61,7 @@ const ProviderSelector = ({onSelectProvider, selectedProvider}: Props) => {
         <Menu.Positioner >
           <Menu.Content >
             {providersTopList.map((p) => (
-              <Menu.Item key={p!.provider_name} onClick={() => onSelectProvider(p!.provider_id)} _hover={{ bg: hoverBgColor, color: hoverColor }}>
+              <Menu.Item key={p!.provider_name} onClick={() => onSelectProvider(p!)} _hover={{ bg: hoverBgColor, color: hoverColor }}>
                 {p?.provider_name}
               </Menu.Item>
             ))}

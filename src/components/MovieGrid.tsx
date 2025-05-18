@@ -3,19 +3,23 @@ import useGenres, { Genre } from '../hooks/useGenres';
 import useMovies, { Movie } from '../hooks/useMovies';
 import MovieCard from './MovieCard';
 import MoviePage from './MoviePage';
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 import MovieCardSkeleton from './MovieCardSkeleton';
 import MovieCardContainer from './MovieCardContainer';
 
+
+
 interface Props {
   selectedGenre: Genre | null;
+  selectedProvider: number | null;
 }
 
 
-const MovieGrid = ({selectedGenre}: Props) => {
+const MovieGrid = ({selectedGenre, selectedProvider}: Props) => {
     
-  const {movies, error, isLoading} = useMovies();
+  const {movies, error, isLoading} = useMovies(selectedGenre ? `${selectedGenre?.id}` : undefined, selectedProvider ? `${selectedProvider}` : undefined);
   const {genres} = useGenres();
+
 
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -27,21 +31,7 @@ const MovieGrid = ({selectedGenre}: Props) => {
     setShowMoviePage(false);
   }
 
-  const [moviesByGenre, setMoviesByGenre] = useState<Movie[] | null>(null);
-  const [moviesNotFound, setMoviesNotFound] = useState(false);
-
-
-  useEffect(() => {
-    if (selectedGenre) {
-      const filteredMovies = movies.filter((movie) => movie.genre_ids.includes(selectedGenre.id))
-      setMoviesByGenre(filteredMovies);
-      if (filteredMovies.length === 0) setMoviesNotFound(true);
-        else setMoviesNotFound(false);
-    } else {
-      setMoviesByGenre(null);
-      setMoviesNotFound(false);
-    }
-  }, [selectedGenre, movies])
+  const filtersApplied = selectedGenre !== null || selectedProvider !== null;
 
 
   return (
@@ -53,8 +43,8 @@ const MovieGrid = ({selectedGenre}: Props) => {
             <MovieCardSkeleton />
           </MovieCardContainer>
           ))}
-        {moviesNotFound && !isLoading && <Text>There are no movies by this genre</Text>}  
-        {(moviesByGenre ?? movies).map((movie) => (
+        {movies.length === 0 && !isLoading && filtersApplied && <Text gap={10}>Movies not foud</Text>}
+        {movies.map((movie) => (
           <MovieCardContainer key={movie.id}>
             <MovieCard movie={movie} genres={genres} onClick={() => {setShowMoviePage(true), setCurrentMovie(movie)}} />
           </MovieCardContainer>

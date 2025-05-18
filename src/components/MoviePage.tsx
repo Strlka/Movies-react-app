@@ -1,4 +1,4 @@
-import { Box, Button, Heading, Image, Text } from "@chakra-ui/react"
+import { Box, Button, Heading, HStack, Image, Text } from "@chakra-ui/react"
 import { Movie } from "../hooks/useMovies"
 import { Genre, getGenresName } from "../hooks/useGenres";
 import { getPosterUrl } from "../services/image-url";
@@ -29,7 +29,10 @@ const MoviePage = ({movie, genres, backToMoviesCards}: MoviePage) => {
         <Image src={getPosterUrl(movie.backdrop_path)} marginY={10} />
         <VoteAverage vote_average={movie.vote_average} />
         <Text marginY={5}>{genresList.join(', ') }</Text>
-        <Text marginY={5}>{date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</Text>
+        <HStack justify='space-between' maxWidth='750px'>
+          <Text marginY={5}>{date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</Text>
+          <Text>{movie.original_language}</Text>
+        </HStack>
         <Text maxWidth='750px' marginY={5}>{movie.overview}</Text>
         <ProvidersIconList movie_id={movie.id}/>
         <Button onClick={backToMoviesCards} marginTop={5}>Back to movies list</Button>

@@ -4,6 +4,7 @@ import MovieGrid from "./components/MovieGrid";
 import GenreList from "./components/GenreList";
 import { useState } from "react";
 import { Genre } from "./hooks/useGenres";
+import ProviderSelector from "./components/ProviderSelector";
 
 
 
@@ -12,6 +13,7 @@ function App() {
   const showAside = useBreakpointValue({ base: false, lg: true });
 
   const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
+  const [selectedProvider, setSelectedProvider] =useState<number | null>(null);
 
 
 
@@ -32,7 +34,8 @@ function App() {
         <GenreList onSelectGenre={(genre) => setSelectedGenre(genre)} selectedGenre={selectedGenre}  />
       </GridItem>}
       <GridItem area='main'>
-        <MovieGrid selectedGenre={selectedGenre}/>
+        <ProviderSelector onSelectProvider={(p) => setSelectedProvider(p)} selectedProvider={selectedProvider}/>
+        <MovieGrid selectedGenre={selectedGenre} selectedProvider={selectedProvider}/>
       </GridItem>
 
     </Grid>

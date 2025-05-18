@@ -11,20 +11,13 @@ export interface Provider {
 }
 
 interface FetchProvidersResponse {
-    id: number;
-    results: {
-        US: {
-            link: string;
-            flatrate: Provider[];
-            rent: Provider[];
-        }
-    };
+    results: Provider[]
 }    
 
 
-const useProviders = (movie_id: number) => {
+const useAllProviders = () => {
 
-    const [providers, setProviders] = useState<Provider[]>([]);
+    const [providersList, setProvidersList] = useState<Provider[]>([]);
     const [error, setError] = useState('');
     const [isLoading, setLoading] = useState(false);
 
@@ -34,14 +27,9 @@ const useProviders = (movie_id: number) => {
 
         setLoading(true);
         
-        apiClient.get<FetchProvidersResponse>(`/3/movie/${movie_id}/watch/providers`, {signal: controller.signal})
+        apiClient.get<FetchProvidersResponse>(`/3/watch/providers/movie`, {signal: controller.signal, params: {language: 'en-US', watch_region: 'US'}})
             .then(res => {
-                const allResults = res.data.results?.US;
-                const combined = [
-                    ...(allResults?.flatrate ?? []),
-                    ...(allResults?.rent ?? []),
-                ];
-                setProviders(combined);
+                setProvidersList(res.data.results);
                 setLoading(false);
             })
             .catch(err => {
@@ -54,8 +42,15 @@ const useProviders = (movie_id: number) => {
 
     }, []);
 
-    return { providers, error, isLoading };
+    return { providersList, error, isLoading };
 
 }
 
-export default useProviders
+export default useAllProviders
+
+
+export const getProvidersWithId = (elems: string[], providers: Provider[]) => {
+    return elems
+        .map((elem) => providers.find((p) => p.provider_name === elem))
+        .filter(Boolean);
+};

@@ -16,7 +16,7 @@ const MovieCard = ({movie, genres, onClick}: Props) => {
 
 const genresList = getGenresName(movie.genre_ids, genres);
 
-let date = new Date(movie.release_date);
+const date = new Date(movie.release_date);
 
   return (
     <Card.Root>

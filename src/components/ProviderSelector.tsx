@@ -8,6 +8,13 @@ interface Props {
   selectedProvider: Provider | null;
 }
 
+const MenuTrigger = (props: any) => {
+  return <Menu.Trigger {...props} />
+}
+
+const MenuItem = (props: any) => {
+  return <Menu.Item {...props} />
+}
 
 const ProviderSelector = ({onSelectProvider, selectedProvider}: Props) => {
 
@@ -51,19 +58,19 @@ const ProviderSelector = ({onSelectProvider, selectedProvider}: Props) => {
 
   return (
     <Menu.Root>
-      <Menu.Trigger asChild>
-        <Button variant='plain' size="lg" borderRadius='5px' cursor='pointer' _hover={{color: 'teal.400' }} >
+      <MenuTrigger asChild>
+        <Button variant='subtle' size="lg" borderRadius='5px' cursor='pointer' _hover={{color: 'teal.400' }} >
         {selectedProvider ? selectedProvider.provider_name : 'Providers'}
           <BsChevronDown / >
         </Button>
-      </Menu.Trigger>
+      </MenuTrigger>
       <Portal>
         <Menu.Positioner >
           <Menu.Content >
             {providersTopList.map((p) => (
-              <Menu.Item key={p!.provider_name} onClick={() => onSelectProvider(p!)} _hover={{ bg: hoverBgColor, color: hoverColor }}>
+              <MenuItem key={p!.provider_name} onClick={() => onSelectProvider(p!)} _hover={{ bg: hoverBgColor, color: hoverColor }}>
                 {p?.provider_name}
-              </Menu.Item>
+              </MenuItem>
             ))}
           </Menu.Content>
         </Menu.Positioner>

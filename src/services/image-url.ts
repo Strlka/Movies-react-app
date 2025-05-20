@@ -6,7 +6,7 @@ export const getImageUrl = (path: string) => {
 }
 
 export const getPosterUrl = (path: string) => {
-    const baseUrl = 'https://image.tmdb.org/t/p/w780';
+    const baseUrl = 'https://image.tmdb.org/t/p/original';
     const posterUrl = baseUrl + path;
     return posterUrl
 }

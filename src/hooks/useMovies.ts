@@ -1,6 +1,7 @@
 import { CanceledError } from "axios";
 import apiClient from "../services/api-client";
 import { useEffect, useState } from "react";
+import { MovieQuery } from "../App";
 
 
 export interface Movie {
@@ -22,7 +23,7 @@ interface FetchMoviesResponse {
 }    
 
 
-const useMovies = (genre?: string, watchProviders?: string) => {
+const useMovies = (movieQuery: MovieQuery) => {
 
     const [movies, setMovies] = useState<Movie[]>([]);
     const [error, setError] = useState('');
@@ -39,11 +40,12 @@ const useMovies = (genre?: string, watchProviders?: string) => {
         setMovies([]);
 
         const params: any = {};
-        if (genre) params.with_genres = genre;
-        if (watchProviders) {
-            params.with_watch_providers = watchProviders;
+        if (movieQuery.genre) params.with_genres = String(movieQuery.genre.id);
+        if (movieQuery.provider) {
+            params.with_watch_providers = String(movieQuery.provider.provider_id);
             params.watch_region = 'US';
         }
+        if (movieQuery.selector) params.sort_by = movieQuery.selector.param;
 
         pages.forEach(page => {
         
@@ -51,7 +53,7 @@ const useMovies = (genre?: string, watchProviders?: string) => {
             .then(res => {
                 setMovies(prevMovies => {
                     const newMovies = [...prevMovies, ...res.data.results];
-                    const unique = Array.from(new Map(newMovies.map(m => [m.id, m])).values());
+                    const unique = Array.from(new Map(newMovies.map(m => [m.id, m])).values()).filter(u => u.poster_path);
                     return unique;
             });
                 setLoading(false);
@@ -64,7 +66,7 @@ const useMovies = (genre?: string, watchProviders?: string) => {
         });    
         
         return () => controller.abort();
-    }, [genre, watchProviders]);
+    }, [movieQuery]);
 
     return { movies, error, isLoading };
 

@@ -1,12 +1,11 @@
 import { SimpleGrid, Text, Box } from '@chakra-ui/react';
-import useGenres, { Genre } from '../hooks/useGenres';
+import useGenres from '../hooks/useGenres';
 import useMovies, { Movie } from '../hooks/useMovies';
 import MovieCard from './MovieCard';
 import MoviePage from './MoviePage';
 import { useState } from 'react';
 import MovieCardSkeleton from './MovieCardSkeleton';
 import MovieCardContainer from './MovieCardContainer';
-import { Provider } from '@/hooks/useAllProviders';
 import {MovieQuery} from '../App';
 
 
@@ -18,7 +17,7 @@ interface Props {
 
 const MovieGrid = ({movieQuery}: Props) => {
     
-  const {movies, error, isLoading} = useMovies(movieQuery.genre ? String(movieQuery.genre.id) : undefined, movieQuery.provider ? String(movieQuery.provider.provider_id) : undefined);
+  const {movies, error, isLoading} = useMovies(movieQuery);
   const {genres} = useGenres();
 
 
@@ -32,7 +31,7 @@ const MovieGrid = ({movieQuery}: Props) => {
     setShowMoviePage(false);
   }
 
-  const filtersApplied = movieQuery.genre !== null || movieQuery.provider !== null;
+  const filtersApplied = movieQuery.genre != null || movieQuery.provider != null;
 
 
   return (

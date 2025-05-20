@@ -5,7 +5,7 @@ const ColorModeSwitch = () => {
   return (
     <HStack>
         <ColorModeButton />
-        <Text>Dark mode</Text>
+        <Text whiteSpace='nowrap'>Dark mode</Text>
     </HStack>
   )
 }

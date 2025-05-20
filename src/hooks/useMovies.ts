@@ -53,7 +53,7 @@ const useMovies = (movieQuery: MovieQuery) => {
             .then(res => {
                 setMovies(prevMovies => {
                     const newMovies = [...prevMovies, ...res.data.results];
-                    const unique = Array.from(new Map(newMovies.map(m => [m.id, m])).values()).filter(u => u.poster_path);
+                    const unique = Array.from(new Map(newMovies.map(m => [m.id, m])).values());
                     return unique;
             });
                 setLoading(false);

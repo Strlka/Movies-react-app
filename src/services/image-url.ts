@@ -1,7 +1,8 @@
+import noImage from '../assets/Vertical_placeholder.svg.png';
 
 export const getImageUrl = (path: string) => {
     const baseUrl = 'https://image.tmdb.org/t/p/w500';
-    const imageUrl = baseUrl + path;
+    const imageUrl = path ? (baseUrl + path) : noImage;
     return imageUrl
 }
 

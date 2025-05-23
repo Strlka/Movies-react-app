@@ -3,22 +3,27 @@ import useGenres from '../hooks/useGenres';
 import useMovies, { Movie } from '../hooks/useMovies';
 import MovieCard from './MovieCard';
 import MoviePage from './MoviePage';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MovieCardSkeleton from './MovieCardSkeleton';
 import MovieCardContainer from './MovieCardContainer';
 import {MovieQuery} from '../App';
+import searchMovies from '../hooks/searchMovies';
+
 
 
 
 interface Props {
   movieQuery: MovieQuery;
+  searchText: string;
+  isSearching: boolean;
 }
 
 
-const MovieGrid = ({movieQuery}: Props) => {
+const MovieGrid = ({movieQuery, searchText, isSearching }: Props) => {
     
   const {movies, error, isLoading} = useMovies(movieQuery);
   const {genres} = useGenres();
+  const { foudMovies } = searchMovies(searchText);
 
 
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -31,8 +36,6 @@ const MovieGrid = ({movieQuery}: Props) => {
     setShowMoviePage(false);
   }
 
-  const filtersApplied = movieQuery.genre != null || movieQuery.provider != null;
-
 
   return (
     <>
@@ -43,8 +46,8 @@ const MovieGrid = ({movieQuery}: Props) => {
             <MovieCardSkeleton />
           </MovieCardContainer>
           ))}
-        {movies.length === 0 && !isLoading && filtersApplied && <Text gap={10}>Movies not foud</Text>}
-        {movies.map((movie) => (
+        {(movies.length === 0 || (foudMovies.length === 0 && isSearching) && !isLoading) && <Text gap={10}>Movies not foud</Text>}
+        {(isSearching ? foudMovies : movies).map((movie) => (
           <MovieCardContainer key={movie.id}>
             <MovieCard movie={movie} genres={genres} onClick={() => {setShowMoviePage(true), setCurrentMovie(movie)}} />
           </MovieCardContainer>

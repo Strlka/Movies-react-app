@@ -1,4 +1,4 @@
-import { CanceledError } from "axios";
+import { AxiosResponse, CanceledError } from "axios";
 import apiClient from "../services/api-client";
 import { useEffect, useState } from "react";
 import { MovieQuery } from "../App";
@@ -24,12 +24,11 @@ interface FetchMoviesResponse {
 
 
 const useMovies = (movieQuery: MovieQuery) => {
-
     const [movies, setMovies] = useState<Movie[]>([]);
     const [error, setError] = useState('');
     const [isLoading, setLoading] = useState(false);
 
-    const pages = [1, 2, 3, 4, 5];
+    const pages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 
     useEffect(() => {
@@ -47,23 +46,45 @@ const useMovies = (movieQuery: MovieQuery) => {
         }
         if (movieQuery.selector) params.sort_by = movieQuery.selector.param;
 
-        pages.forEach(page => {
+        // pages.forEach(page => {
         
-        apiClient.get<FetchMoviesResponse>('/3/discover/movie', {signal: controller.signal, params: {page: page, ...params}})
-            .then(res => {
-                setMovies(prevMovies => {
-                    const newMovies = [...prevMovies, ...res.data.results];
-                    const unique = Array.from(new Map(newMovies.map(m => [m.id, m])).values());
-                    return unique;
+        // apiClient.get<FetchMoviesResponse>('/3/discover/movie', {signal: controller.signal, params: {page: page, ...params}})
+        //     .then(res => {
+        //         setMovies(prevMovies => {
+        //             const newMovies = [...prevMovies, ...res.data.results];
+        //             const unique = Array.from(new Map(newMovies.map(m => [m.id, m])).values());
+        //             return unique;
+        //     });
+        //         setLoading(false);
+  
+        //     })
+        //     .catch(err => {
+        //         if (err instanceof CanceledError) return;
+        //         setError(err.message);
+        //         setLoading(false);
+        //     });
+        // });    
+
+
+        const pagesRequests = pages.map(page => {
+            return apiClient.get<FetchMoviesResponse>('/3/discover/movie', {signal: controller.signal, params: {page: page, ...params}})
+                .catch(err => {
+                    if (err instanceof CanceledError) return;
+                    setError(err.message);
+                });
             });
+
+            Promise.all(pagesRequests).then((responces: Array<AxiosResponse<FetchMoviesResponse> | void>) => {
+                if (typeof responces[0] === 'undefined') {
+                    return;
+                }
+
+                let allMovies: Movie[] = [];
+                allMovies = allMovies.concat(...responces.map(res => res!.data.results));
+                const unique: Movie[] = Array.from(new Map(allMovies.map(m => [m.id, m])).values());
+                setMovies(unique);
                 setLoading(false);
             })
-            .catch(err => {
-                if (err instanceof CanceledError) return;
-                setError(err.message);
-                setLoading(false);
-            });
-        });    
         
         return () => controller.abort();
     }, [movieQuery]);

@@ -3,12 +3,15 @@ import logo from '../assets/blue_square_2_themoviedb.svg';
 import ColorModeSwitch from './ColorModeSwitch';
 import SearchInput from './SearchInput';
 
+interface Props {
+  onSearch: (serachText: string) => void;
+}
 
-const NavBar = () => {
+const NavBar = ({onSearch}: Props) => {
   return (
     <HStack padding='10px'>
         <Image src={logo} boxSize='60px' />
-        <SearchInput />
+        <SearchInput onSearch={onSearch}/>
         <ColorModeSwitch />
     </HStack>
   )

@@ -45,7 +45,7 @@ const useGenres = () => {
  
 export default useGenres;
 
-export const getGenresName = (elems: number[], genres: Genre[]) => {
+export const getGenresName = (elems: number[] = [], genres: Genre[] = []) => {
     return elems
         .map((elem) => genres.find((genre) => genre.id === elem)?.name)
         .filter(Boolean);

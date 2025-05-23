@@ -1,4 +1,4 @@
-import { Grid, GridItem, HStack, useBreakpointValue } from "@chakra-ui/react"
+import { Box, Grid, GridItem, HStack, useBreakpointValue } from "@chakra-ui/react"
 import NavBar from "./components/NavBar";
 import MovieGrid from "./components/MovieGrid";
 import GenreList from "./components/GenreList";
@@ -7,6 +7,7 @@ import { Genre } from "./hooks/useGenres";
 import ProviderSelector from "./components/ProviderSelector";
 import { Provider } from "./hooks/useAllProviders";
 import SortSelector, { Selector } from "./components/SortSelector";
+import MovieHeading from "./components/MovieHeading";
 
 
 export interface MovieQuery {
@@ -56,22 +57,25 @@ function App() {
         </GridItem>
       )}
       <GridItem area="main">
-        <HStack gap={5} paddingLeft={4} marginBottom={5}>
-          <ProviderSelector
-            onSelectProvider={(provider) => {
-              setMovieQuery({ ...movieQuery, provider });
-              setSearching(false);
-            }}
-            selectedProvider={movieQuery.provider}
-          />
-          <SortSelector
-            onSortSelector={(selector) => {
-              setMovieQuery({ ...movieQuery, selector });
-              setSearching(false);
-            }}
-            sortSelector={movieQuery.selector}
-          />
-        </HStack>
+        <Box paddingLeft={3}>
+          <MovieHeading movieQuery={movieQuery} searchText={searchText} isSearching={isSearching}/>
+          <HStack gap={5} marginBottom={5}>
+            <ProviderSelector
+              onSelectProvider={(provider) => {
+                setMovieQuery({ ...movieQuery, provider });
+                setSearching(false);
+              }}
+              selectedProvider={movieQuery.provider}
+            />
+            <SortSelector
+              onSortSelector={(selector) => {
+                setMovieQuery({ ...movieQuery, selector });
+                setSearching(false);
+              }}
+              sortSelector={movieQuery.selector}
+            />
+          </HStack>
+        </Box>
         <MovieGrid
           movieQuery={movieQuery}
           searchText={searchText}

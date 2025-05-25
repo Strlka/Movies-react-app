@@ -14,6 +14,8 @@ export interface Movie {
     overview: string,
     release_date: string,
     original_language: string,
+    popularity: number,
+    vote_count: number,
     
 }
 
@@ -46,7 +48,8 @@ const searchMovies = (searchText: string) => {
                 setFoundMovies(prevMovies => {
                     const newMovies = [...prevMovies, ...res.data.results];
                     const unique = Array.from(new Map(newMovies.map(m => [m.id, m])).values());
-                    return unique;
+                    const sortedByVoteCount = unique.sort((a, b) => b.vote_count - a.vote_count);
+                    return sortedByVoteCount;
             });
                 setLoading(false);
             })

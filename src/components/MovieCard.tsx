@@ -1,6 +1,6 @@
 import { Movie } from '@/hooks/useMovies';
 import { Genre, getGenresName } from '../hooks/useGenres';
-import { Card, CardBody, Heading, HStack, Image, Text } from '@chakra-ui/react';
+import { Badge, Box, Card, CardBody, Heading, HStack, Image, Text } from '@chakra-ui/react';
 import VoteAverage from './VoteAverage';
 import { getImageUrl } from '../services/image-url';
 
@@ -20,17 +20,19 @@ const date = new Date(movie.release_date);
 
   return (
     <Card.Root>
-      <Image src={getImageUrl(movie.poster_path)} cursor='pointer' onClick={onClick}/>
+      <Box position='relative' marginBottom={6}>
+        <Image src={getImageUrl(movie.poster_path)} cursor='pointer' onClick={onClick}/>
+         <Box position='absolute' left='50%' transform="translate(-50%, -35%)" zIndex="1">
+            <VoteAverage vote_average={movie.vote_average} />
+         </Box>
+      </Box>
       <CardBody>
-        <HStack justify='space-between'>
-          <Heading fontSize='2xl' onClick={onClick} cursor='pointer' _hover={{color: 'teal.400' }}>{movie.title}</Heading>
-          <VoteAverage vote_average={movie.vote_average} />
+        <Heading fontSize='2xl' marginBottom={2} paddingTop='2' onClick={onClick} cursor='pointer' _hover={{color: 'teal.400' }}>{movie.title}</Heading>
+        <HStack justify='space-between' align="center">
+          <Text paddingTop='3' marginBottom={2} colorPalette='teal'>{date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>
+          <Badge colorPalette='teal' size="lg">{movie.original_language}</Badge>
         </HStack>
-        <Text marginY={1}>{genresList.join(', ')}</Text>
-        <HStack justify='space-between'>
-          <Text marginY={1}>{date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</Text>
-          <Text>{movie.original_language}</Text>
-        </HStack>
+        <Text whiteSpace='normal' textAlign='left' paddingTop='3'>{genresList.join(', ')}</Text>
       </CardBody>
     </Card.Root>
   )

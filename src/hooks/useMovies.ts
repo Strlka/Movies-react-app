@@ -14,6 +14,8 @@ export interface Movie {
     overview: string,
     release_date: string,
     original_language: string,
+    popularity: number,
+    vote_count: number,
     
 }
 

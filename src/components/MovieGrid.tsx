@@ -36,10 +36,11 @@ const MovieGrid = ({movieQuery, searchText, isSearching }: Props) => {
     setShowMoviePage(false);
   }
 
+  if (error) return <Text>{error}</Text>;
+
 
   return (
     <>
-      {error && <Text>{error}</Text>}
       {!showMoviePage && <SimpleGrid columns={{sm: 1, md: 2, lg: 3, xl: 4}} padding='10px' gap={5}>
         {isLoading && skeletons.map((skeleton) => (
           <MovieCardContainer key={skeleton}>

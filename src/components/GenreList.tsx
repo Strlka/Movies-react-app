@@ -1,5 +1,6 @@
 import { Button, Heading, List, Spinner } from '@chakra-ui/react';
 import useGenres, { Genre } from '../hooks/useGenres'
+import GenreListSkeleton from './GenreListSkeleton';
 
 
 interface Props {
@@ -13,7 +14,7 @@ const GenreList = ({onSelectGenre, selectedGenre}: Props) => {
 
     if (error) return null;
 
-    if (isLoading) return <Spinner />;
+    if (isLoading) return <GenreListSkeleton />;
 
   return (
     <>

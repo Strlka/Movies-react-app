@@ -27,7 +27,7 @@ const date = new Date(movie.release_date);
          </Box>
       </Box>
       <CardBody flex="1" display="flex" flexDirection="column">
-        <Heading fontSize='2xl' marginBottom={2} paddingTop='2' onClick={onClick} cursor='pointer' _hover={{color: 'teal.400' }}>{movie.title}</Heading>
+        <Heading fontSize='xl' marginBottom={2} paddingTop='2' onClick={onClick} cursor='pointer' _hover={{color: 'teal.400' }}>{movie.title}</Heading>
         <HStack justify='space-between' align="center">
           <Text paddingTop='3' marginBottom={2} colorPalette='teal'>{date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>
           <Badge colorPalette='teal' size="lg">{movie.original_language}</Badge>

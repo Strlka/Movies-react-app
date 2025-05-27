@@ -26,7 +26,7 @@ const MovieGrid = ({movieQuery, searchText, isSearching }: Props) => {
   const { foudMovies } = searchMovies(searchText);
 
 
-  const skeletons = [1, 2, 3, 4, 5, 6, 7, 8];
+  const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   const [showMoviePage, setShowMoviePage] = useState(false);
   const [currentMovie, setCurrentMovie] = useState({});
@@ -41,13 +41,13 @@ const MovieGrid = ({movieQuery, searchText, isSearching }: Props) => {
 
   return (
     <>
-      {!showMoviePage && <SimpleGrid columns={{sm: 1, md: 2, lg: 3, xl: 4}} padding='10px' gap={5}>
+      {!showMoviePage && <SimpleGrid columns={{sm: 2, md: 3, lg: 4, xl: 5}} padding='10px' gap={5}>
         {isLoading && skeletons.map((skeleton) => (
           <MovieCardContainer key={skeleton}>
             <MovieCardSkeleton />
           </MovieCardContainer>
           ))}
-        {(movies.length === 0 || (foudMovies.length === 0 && isSearching) && !isLoading) && <Text gap={10}>Movies not foud</Text>}
+        {!isLoading && ((movies.length === 0 && !isLoading) || (foudMovies.length === 0 && isSearching)) && <Text gap={10}>Movies not foud</Text>}
         {(isSearching ? foudMovies : movies).map((movie) => (
           <MovieCardContainer key={movie.id}>
             <MovieCard movie={movie} genres={genres} onClick={() => {setShowMoviePage(true), setCurrentMovie(movie)}} />

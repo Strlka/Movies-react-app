@@ -26,7 +26,6 @@ function App() {
   const [isSearching, setSearching] = useState(false);
 
 
-
   return (
     <Grid
       templateAreas={{
@@ -58,7 +57,14 @@ function App() {
       )}
       <GridItem area="main">
         <Box paddingLeft={3}>
-          <MovieHeading movieQuery={movieQuery} searchText={searchText} isSearching={isSearching}/>
+          <MovieHeading 
+            movieQuery={movieQuery} 
+            searchText={searchText} 
+            isSearching={isSearching} 
+            resetSearching={() => {setSearching(false); setMovieQuery({} as  MovieQuery)}}
+            resetGenre={() => {setMovieQuery({ ...movieQuery, genre: null})}}
+            resetProvider={() => {setMovieQuery({ ...movieQuery, provider: null})}}
+          />
           <HStack gap={5} marginBottom={5}>
             <ProviderSelector
               onSelectProvider={(provider) => {

@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import apiClient from "../services/api-client";
 import { CanceledError } from "axios";
 import { useEffect, useState } from "react";
@@ -12,36 +13,47 @@ interface FetchGamesGenresResponse {
 }   
 
 
-const useGenres = () => {
+const useGenres = () => useQuery({
 
-    const [genres, setGenres] = useState<Genre[]>([]);
-    const [error, setError] = useState('');
-    const [isLoading, setLoading] = useState(false);
+    queryKey: ['genres'],
+    queryFn: () => 
+        apiClient
+            .get<FetchGamesGenresResponse>('3/genre/movie/list')
+            .then(res => res.data.genres),
+    staleTime: 24 * 60 * 60 * 1000, //24h
 
-    useEffect( () => {
+    });
 
-        const controller = new AbortController();
 
-        setLoading(true);
+
+    // const [genres, setGenres] = useState<Genre[]>([]);
+    // const [error, setError] = useState('');
+    // const [isLoading, setLoading] = useState(false);
+
+    // useEffect( () => {
+
+    //     const controller = new AbortController();
+
+    //     setLoading(true);
         
-        apiClient.get<FetchGamesGenresResponse>('3/genre/movie/list', {signal: controller.signal})
-            .then(res => {
-                setGenres(res.data.genres);
-                setLoading(false);
-            })
-            .catch(err => {
-                if (err instanceof CanceledError) return;
-                setError(err.message);
-                setLoading(false);
-            });
+    //     apiClient.get<FetchGamesGenresResponse>('3/genre/movie/list', {signal: controller.signal})
+    //         .then(res => {
+    //             setGenres(res.data.genres);
+    //             setLoading(false);
+    //         })
+    //         .catch(err => {
+    //             if (err instanceof CanceledError) return;
+    //             setError(err.message);
+    //             setLoading(false);
+    //         });
         
-        return () => controller.abort(); 
+    //     return () => controller.abort(); 
 
-    }, []);
+    // }, []);
 
-    return { genres, error, isLoading };
+    // return { genres, error, isLoading };
 
-}
+// }
  
 export default useGenres;
 

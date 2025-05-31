@@ -3,7 +3,7 @@ import useGenres from '../hooks/useGenres';
 import useMovies, { Movie } from '../hooks/useMovies';
 import MovieCard from './MovieCard';
 import MoviePage from './MoviePage';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import MovieCardSkeleton from './MovieCardSkeleton';
 import MovieCardContainer from './MovieCardContainer';
 import {MovieQuery} from '../App';
@@ -22,7 +22,7 @@ interface Props {
 const MovieGrid = ({movieQuery, searchText, isSearching }: Props) => {
     
   const {movies, error, isLoading} = useMovies(movieQuery);
-  const {genres} = useGenres();
+  const {data} = useGenres();
   const { foudMovies } = searchMovies(searchText);
 
 
@@ -50,12 +50,12 @@ const MovieGrid = ({movieQuery, searchText, isSearching }: Props) => {
         {!isLoading && ((movies.length === 0 && !isLoading) || (foudMovies.length === 0 && isSearching)) && <Text gap={10}>Movies not foud</Text>}
         {(isSearching ? foudMovies : movies).map((movie) => (
           <MovieCardContainer key={movie.id}>
-            <MovieCard movie={movie} genres={genres} onClick={() => {setShowMoviePage(true), setCurrentMovie(movie)}} />
+            <MovieCard movie={movie} genres={data || []} onClick={() => {setShowMoviePage(true), setCurrentMovie(movie)}} />
           </MovieCardContainer>
           ))}
       </SimpleGrid>}
       {showMoviePage && <Box padding='10px' gap={10}> 
-        <MoviePage movie={currentMovie as Movie} genres={genres} backToMoviesCards={backToMoviesCards}/>
+        <MoviePage movie={currentMovie as Movie} genres={data || []} backToMoviesCards={backToMoviesCards}/>
       </Box>}
     </>
   )

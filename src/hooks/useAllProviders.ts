@@ -1,6 +1,7 @@
 import { CanceledError } from "axios";
 import apiClient from "../services/api-client";
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 
 export interface Provider {
@@ -15,36 +16,15 @@ interface FetchProvidersResponse {
 }    
 
 
-const useAllProviders = () => {
+const useAllProviders = () => useQuery({
 
-    const [providersList, setProvidersList] = useState<Provider[]>([]);
-    const [error, setError] = useState('');
-    const [isLoading, setLoading] = useState(false);
+    queryKey: ['providersList'],
+    queryFn: () => apiClient
+        .get<FetchProvidersResponse>(`/3/watch/providers/movie`)
+        .then(res => res.data.results),
+    staleTime: 24 * 60 * 60 * 1000, //24h,
+});
 
-    useEffect( () => {
-
-        const controller = new AbortController();
-
-        setLoading(true);
-        
-        apiClient.get<FetchProvidersResponse>(`/3/watch/providers/movie`, {signal: controller.signal, params: {language: 'en-US', watch_region: 'US'}})
-            .then(res => {
-                setProvidersList(res.data.results);
-                setLoading(false);
-            })
-            .catch(err => {
-                if (err instanceof CanceledError) return;
-                setError(err.message);
-                setLoading(false);
-            });
-        
-        return () => controller.abort(); 
-
-    }, []);
-
-    return { providersList, error, isLoading };
-
-}
 
 export default useAllProviders
 

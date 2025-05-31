@@ -48,9 +48,9 @@ const ProviderSelector = ({onSelectProvider, selectedProvider}: Props) => {
     const hoverBgColor = useColorModeValue('teal.400', 'teal.200');
     const hoverColor = useColorModeValue('white', 'black');
 
-    const { providersList, error } = useAllProviders();
+    const { data, error } = useAllProviders();
 
-    const providersTopList = getProvidersWithId(providersNameTopList, providersList);
+    const providersTopList = getProvidersWithId(providersNameTopList, (data || []));
 
     if (error) return null;
 

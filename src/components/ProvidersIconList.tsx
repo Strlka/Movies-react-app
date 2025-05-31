@@ -9,12 +9,12 @@ interface Props {
 
 const ProvidersIconList = ({movie_id}: Props) => {
 
-const {providers} = useProviders(movie_id);
+const {data} = useProviders(movie_id);
 
 
   return (
     <HStack>
-      {providers?.map((provider) => {
+      {data?.map((provider) => {
           return <Tooltip content={provider.provider_name} key={provider.provider_id}>
                   <Image 
                   src={getProviderImageUrl(provider.logo_path)} 

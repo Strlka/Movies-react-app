@@ -1,6 +1,5 @@
-import { CanceledError } from "axios";
 import apiClient from "../services/api-client";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 
 export interface Provider {
@@ -22,40 +21,21 @@ interface FetchProvidersResponse {
 }    
 
 
-const useProviders = (movie_id: number) => {
+const useProviders = (movie_id: number) => useQuery({
 
-    const [providers, setProviders] = useState<Provider[]>([]);
-    const [error, setError] = useState('');
-    const [isLoading, setLoading] = useState(false);
-
-    useEffect( () => {
-
-        const controller = new AbortController();
-
-        setLoading(true);
-        
-        apiClient.get<FetchProvidersResponse>(`/3/movie/${movie_id}/watch/providers`, {signal: controller.signal})
-            .then(res => {
+    queryKey: ['providers', movie_id],
+    queryFn: () => apiClient
+        .get<FetchProvidersResponse>(`/3/movie/${movie_id}/watch/providers`)
+        .then(res => {
                 const allResults = res.data.results?.US;
                 const combined = [
                     ...(allResults?.flatrate ?? []),
                     ...(allResults?.rent ?? []),
                 ];
-                setProviders(combined);
-                setLoading(false);
-            })
-            .catch(err => {
-                if (err instanceof CanceledError) return;
-                setError(err.message);
-                setLoading(false);
-            });
-        
-        return () => controller.abort(); 
-
-    }, []);
-
-    return { providers, error, isLoading };
-
-}
+                return combined;
+        }),
+    staleTime: 24 * 60 * 60 * 1000, //24h,
+         
+});
 
 export default useProviders

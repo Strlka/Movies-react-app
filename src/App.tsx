@@ -1,13 +1,14 @@
-import { Box, Grid, GridItem, HStack, useBreakpointValue } from "@chakra-ui/react"
+import { Box, Grid, GridItem, HStack, IconButton, useBreakpointValue } from "@chakra-ui/react"
 import NavBar from "./components/NavBar";
 import MovieGrid from "./components/MovieGrid";
 import GenreList from "./components/GenreList";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Genre } from "./hooks/useGenres";
 import ProviderSelector from "./components/ProviderSelector";
 import { Provider } from "./hooks/useAllProviders";
 import SortSelector, { Selector } from "./components/SortSelector";
 import MovieHeading from "./components/MovieHeading";
+import { FaAnglesUp } from "react-icons/fa6";
 
 
 export interface MovieQuery {
@@ -24,71 +25,117 @@ function App() {
   const [movieQuery, setMovieQuery] = useState<MovieQuery>({} as MovieQuery);
   const [searchText, setSearchText] = useState('');
   const [isSearching, setSearching] = useState(false);
+  const [foudMoviesTotalResults,  setFoudMoviesTotalResults] = useState<number | ''>('');
+  const [isShowScrollToTop, setShowScrollToTop] = useState(false);
+
+  const mainRef = useRef<HTMLDivElement>(null);
+  const scrollToTop = () => {
+    if (mainRef.current) {
+      mainRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+  useEffect(() => {
+    const element = mainRef.current;
+    if (!element) return;
+    
+    const handleScroll = () => {
+      const showAt = window.innerHeight * 2;
+      setShowScrollToTop(element.scrollTop > showAt);
+
+    };
+
+    element.addEventListener("scroll", handleScroll);
+    return () => element.removeEventListener("scroll", handleScroll);
+  }, []);
 
 
   return (
-    <Grid
-      templateAreas={{
-        base: `"nav" "main"`,
-        lg: `"nav nav" "aside main"`,
-      }}
-      templateColumns={{
-        base: "1fr",
-        lg: "200px 1fr",
-      }}
-    >
-      <GridItem area="nav">
-        <NavBar onSearch={(searchText) => {
-            setSearchText(searchText);
-            setSearching(true)
-          }} 
-      />
-      </GridItem>
-      {showAside && (
-        <GridItem area="aside" paddingX="10px">
-          <GenreList
-            onSelectGenre={(genre) => {
-              setMovieQuery({ ...movieQuery, genre });
-              setSearching(false);
-            }}
-            selectedGenre={movieQuery.genre}
+    <>
+      <Grid height="100vh"
+        templateAreas={{
+          base: `"nav" "main"`,
+          lg: `"nav nav" "aside main"`,
+        }}
+        templateColumns={{
+          base: "1fr",
+          lg: "200px 1fr",
+        }}
+        templateRows={{
+          base: "auto 1fr",
+          lg: "auto 1fr",
+        }}
+      >
+        <GridItem area="nav">
+          <NavBar onSearch={(searchText) => {
+              setSearchText(searchText);
+              setSearching(true)
+            }} 
+        />
+        </GridItem>
+        {showAside && (
+          <GridItem area="aside" paddingX="10px">
+            <GenreList
+              onSelectGenre={(genre) => {
+                setMovieQuery({ ...movieQuery, genre });
+                setSearching(false);
+              }}
+              selectedGenre={movieQuery.genre}
+            />
+          </GridItem>
+        )}
+        <GridItem area="main" overflowY="auto" ref={mainRef}>
+          <Box paddingLeft={3}>
+            <MovieHeading 
+              movieQuery={movieQuery} 
+              searchText={searchText} 
+              isSearching={isSearching}
+              foudMoviesTotalResults={foudMoviesTotalResults} 
+              resetSearching={() => {setSearching(false); setMovieQuery({} as  MovieQuery)}}
+              resetGenre={() => {setMovieQuery({ ...movieQuery, genre: null})}}
+              resetProvider={() => {setMovieQuery({ ...movieQuery, provider: null})}}
+            />
+            <HStack gap={5} marginBottom={5}>
+              <ProviderSelector
+                onSelectProvider={(provider) => {
+                  setMovieQuery({ ...movieQuery, provider });
+                  setSearching(false);
+                }}
+                selectedProvider={movieQuery.provider}
+              />
+              <SortSelector
+                onSortSelector={(selector) => {
+                  setMovieQuery({ ...movieQuery, selector });
+                  setSearching(false);
+                }}
+                sortSelector={movieQuery.selector}
+              />
+            </HStack>
+          </Box>
+          <MovieGrid
+            movieQuery={movieQuery}
+            searchText={searchText}
+            isSearching={isSearching}
+            onTotalResultsChange={(totalResults: number | '') => setFoudMoviesTotalResults(totalResults)}
           />
         </GridItem>
-      )}
-      <GridItem area="main">
-        <Box paddingLeft={3}>
-          <MovieHeading 
-            movieQuery={movieQuery} 
-            searchText={searchText} 
-            isSearching={isSearching} 
-            resetSearching={() => {setSearching(false); setMovieQuery({} as  MovieQuery)}}
-            resetGenre={() => {setMovieQuery({ ...movieQuery, genre: null})}}
-            resetProvider={() => {setMovieQuery({ ...movieQuery, provider: null})}}
-          />
-          <HStack gap={5} marginBottom={5}>
-            <ProviderSelector
-              onSelectProvider={(provider) => {
-                setMovieQuery({ ...movieQuery, provider });
-                setSearching(false);
-              }}
-              selectedProvider={movieQuery.provider}
-            />
-            <SortSelector
-              onSortSelector={(selector) => {
-                setMovieQuery({ ...movieQuery, selector });
-                setSearching(false);
-              }}
-              sortSelector={movieQuery.selector}
-            />
-          </HStack>
-        </Box>
-        <MovieGrid
-          movieQuery={movieQuery}
-          searchText={searchText}
-          isSearching={isSearching}
-        />
-      </GridItem>
-    </Grid>
+        {isShowScrollToTop && <IconButton 
+          variant='subtle' 
+          size="lg" 
+          _hover={{color: 'teal.400' }}
+          onClick={scrollToTop}
+          position="fixed"
+          bottom="30px"
+          right="30px"
+          zIndex={2}
+          borderRadius="full"
+          transition="opacity 0.3s"
+          opacity={isShowScrollToTop ? 1 : 0}
+          aria-label="Scroll to top"
+          >
+          <FaAnglesUp />
+        </IconButton>}
+      </Grid>
+    </>
   );
 }
 

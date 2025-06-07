@@ -59,7 +59,7 @@ const ProviderSelector = ({onSelectProvider, selectedProvider}: Props) => {
   return (
     <Menu.Root>
       <MenuTrigger asChild>
-        <Button variant='subtle' size="lg" borderRadius='5px' cursor='pointer' _hover={{color: 'teal.400' }} >
+        <Button variant='subtle' size="lg" borderRadius='5px' _hover={{color: 'teal.400' }} >
         {selectedProvider ? selectedProvider.provider_name : 'Providers'}
           <BsChevronDown / >
         </Button>
@@ -68,7 +68,7 @@ const ProviderSelector = ({onSelectProvider, selectedProvider}: Props) => {
         <Menu.Positioner >
           <Menu.Content >
             {providersTopList.map((p) => (
-              <MenuItem key={p!.provider_name} onClick={() => onSelectProvider(p!)} _hover={{ bg: hoverBgColor, color: hoverColor }}>
+              <MenuItem key={p!.provider_name} onClick={() => onSelectProvider(p!)} cursor='pointer' _hover={{ bg: hoverBgColor, color: hoverColor }}>
                 {p?.provider_name}
               </MenuItem>
             ))}

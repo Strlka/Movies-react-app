@@ -3,8 +3,8 @@ import apiClient from "../services/api-client";
 
 
 export interface Genre {
-    id: number,
-    name: string,
+    id: number;
+    name: string;
 }
 
 interface FetchGamesGenresResponse {

@@ -70,7 +70,7 @@ const SortSelector = ({onSortSelector, sortSelector} : Props) => {
   return (
     <Menu.Root>
       <MenuTrigger asChild>
-        <Button variant='subtle' size="lg" borderRadius='5px' cursor='pointer' _hover={{color: 'teal.400' }} >
+        <Button variant='subtle' size="lg" borderRadius='5px' _hover={{color: 'teal.400' }} >
           {sortSelector?.name || 'Sort by'}
           <BsChevronDown />
         </Button>
@@ -79,7 +79,7 @@ const SortSelector = ({onSortSelector, sortSelector} : Props) => {
         <Menu.Positioner >
           <Menu.Content>
             {selectors.map((selector) => (
-              <MenuItem key={selector.id} onClick={() => onSortSelector(selector)} _hover={{ bg: hoverBgColor, color: hoverColor }}>
+              <MenuItem key={selector.id} onClick={() => onSortSelector(selector)} cursor='pointer' _hover={{ bg: hoverBgColor, color: hoverColor }}>
                 {selector.name}
               </MenuItem>
             ))}

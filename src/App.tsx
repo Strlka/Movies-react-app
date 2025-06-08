@@ -3,18 +3,16 @@ import NavBar from "./components/NavBar";
 import MovieGrid from "./components/MovieGrid";
 import GenreList from "./components/GenreList";
 import { useEffect, useRef, useState } from "react";
-import { Genre } from "./hooks/useGenres";
 import ProviderSelector from "./components/ProviderSelector";
-import { Provider } from "./hooks/useAllProviders";
-import SortSelector, { Selector } from "./components/SortSelector";
+import SortSelector from "./components/SortSelector";
 import MovieHeading from "./components/MovieHeading";
 import { FaAnglesUp } from "react-icons/fa6";
 
 
 export interface MovieQuery {
-  genre: Genre | null;
-  provider: Provider | null;
-  selector: Selector | null;
+  genreId?: number;
+  providerId?: number;
+  selectorParam?: string;
 }
 
 
@@ -75,11 +73,11 @@ function App() {
         {showAside && (
           <GridItem area="aside" paddingX="10px">
             <GenreList
-              onSelectGenre={(genre) => {
-                setMovieQuery({ ...movieQuery, genre });
+              onSelectGenre={(genreId) => {
+                setMovieQuery({ ...movieQuery, genreId });
                 setSearching(false);
               }}
-              selectedGenre={movieQuery.genre}
+              selectedGenreId={movieQuery.genreId}
             />
           </GridItem>
         )}
@@ -91,23 +89,23 @@ function App() {
               isSearching={isSearching}
               foudMoviesTotalResults={foudMoviesTotalResults} 
               resetSearching={() => {setSearching(false); setMovieQuery({} as  MovieQuery)}}
-              resetGenre={() => {setMovieQuery({ ...movieQuery, genre: null})}}
-              resetProvider={() => {setMovieQuery({ ...movieQuery, provider: null})}}
+              resetGenre={() => {setMovieQuery({ ...movieQuery, genreId: undefined})}}
+              resetProvider={() => {setMovieQuery({ ...movieQuery, providerId: undefined})}}
             />
             <HStack gap={5} marginBottom={5}>
               <ProviderSelector
-                onSelectProvider={(provider) => {
-                  setMovieQuery({ ...movieQuery, provider });
+                onSelectProvider={(providerId) => {
+                  setMovieQuery({ ...movieQuery, providerId });
                   setSearching(false);
                 }}
-                selectedProvider={movieQuery.provider}
+                selectedProviderId={movieQuery.providerId}
               />
               <SortSelector
-                onSortSelector={(selector) => {
-                  setMovieQuery({ ...movieQuery, selector });
+                onSortSelector={(selectorParam) => {
+                  setMovieQuery({ ...movieQuery, selectorParam });
                   setSearching(false);
                 }}
-                sortSelector={movieQuery.selector}
+                sortSelectorParam={movieQuery.selectorParam}
               />
             </HStack>
           </Box>

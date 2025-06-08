@@ -1,7 +1,6 @@
-import { CanceledError } from "axios";
 import apiClient from "../services/api-client";
-import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import providers from "../data/providers";
 
 
 export interface Provider {
@@ -22,6 +21,7 @@ const useAllProviders = () => useQuery({
     queryFn: () => apiClient
         .get<FetchProvidersResponse>(`/3/watch/providers/movie`)
         .then(res => res.data.results),
+    initialData: providers,    
     staleTime: 24 * 60 * 60 * 1000, //24h,
 });
 

@@ -1,5 +1,8 @@
+import useGenres from '../hooks/useGenres';
 import { MovieQuery } from '../App';
 import { CloseButton, Heading, HStack, Spinner, Text } from '@chakra-ui/react'
+import useAllProviders, { getProvidersWithId } from '../hooks/useAllProviders';
+import { providersNameTopList } from './ProviderSelector';
 
 
 interface Props {
@@ -14,10 +17,13 @@ interface Props {
 
 const MovieHeading = ({movieQuery, searchText, isSearching, foudMoviesTotalResults, resetSearching, resetGenre, resetProvider}: Props) => {
 
+  const {data: genres} = useGenres();
+  const genre = genres?.find(genre => genre.id === movieQuery.genreId); 
 
-  const genre = movieQuery.genre?.name; 
+  const { data: providersList } = useAllProviders();
+  const providersTopList = getProvidersWithId(providersNameTopList, (providersList || []));
+  const provider = providersTopList.find(provider => provider?.provider_id === movieQuery.providerId);
 
-  const provider = movieQuery.provider?.provider_name;
 
   return (
     <Heading as="h1" marginY={5} fontSize={{base: '2xl', lg: '3xl'}}>
@@ -37,13 +43,13 @@ const MovieHeading = ({movieQuery, searchText, isSearching, foudMoviesTotalResul
           <Text as="span">Movies</Text>
           {genre && (
             <HStack gap={1}>
-              <Text as="span">/ {genre}</Text>
+              <Text as="span">/ {genre.name}</Text>
               <CloseButton size="xs" variant='plain' onClick={resetGenre}/>
             </HStack>
           )}
           {provider && (
             <HStack gap={1}>
-              <Text as="span">/ {provider}</Text>
+              <Text as="span">/ {provider.provider_name}</Text>
               <CloseButton size="xs" variant='plain' onClick={resetProvider}/>
             </HStack>
           )}

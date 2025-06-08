@@ -4,12 +4,12 @@ import GenreListSkeleton from './GenreListSkeleton';
 
 
 interface Props {
-    onSelectGenre: (genre: Genre) => void;
-    selectedGenre: Genre | null;
+    onSelectGenre: (genreId: number) => void;
+    selectedGenreId?: number;
 }
 
 
-const GenreList = ({onSelectGenre, selectedGenre}: Props) => {
+const GenreList = ({onSelectGenre, selectedGenreId}: Props) => {
     const {data, isLoading, error} = useGenres();
 
     if (error) return null;
@@ -21,7 +21,7 @@ const GenreList = ({onSelectGenre, selectedGenre}: Props) => {
       <Heading marginY={5}>Genres</Heading>
       <List.Root listStyleType='none'>
         {data?.map(genre => <List.Item key={genre.id} paddingY='5px'>
-          <Button whiteSpace='normal' textAlign='left' onClick={() => onSelectGenre(genre)} fontWeight={selectedGenre?.id === genre.id ? 'bold' : 'normal'} variant='plain' colorPalette='teal' fontSize='md' height='auto' padding='0' _hover={{ textDecoration: 'underline', background: 'none' }}>{genre.name}</Button>
+          <Button whiteSpace='normal' textAlign='left' onClick={() => onSelectGenre(genre.id)} fontWeight={selectedGenreId === genre.id ? 'bold' : 'normal'} variant='plain' colorPalette='teal' fontSize='md' height='auto' padding='0' _hover={{ textDecoration: 'underline', background: 'none' }}>{genre.name}</Button>
         </List.Item>)}
       </List.Root>
     </>

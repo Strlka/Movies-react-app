@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import apiClient from "../services/api-client";
+import genres from "../data/genres";
 
 
 export interface Genre {
@@ -19,9 +20,10 @@ const useGenres = () => useQuery({
         apiClient
             .get<FetchGamesGenresResponse>('3/genre/movie/list')
             .then(res => res.data.genres),
+    initialData: genres,
     staleTime: 24 * 60 * 60 * 1000, //24h
 
-    });
+});
 
  
 export default useGenres;

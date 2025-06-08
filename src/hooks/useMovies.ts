@@ -31,12 +31,12 @@ const useMovies = (movieQuery: MovieQuery) => useInfiniteQuery({
     queryKey: ['movies', movieQuery],
     queryFn: ({pageParam}) => {
         const params: any = {};
-        if (movieQuery.genre) params.with_genres = String(movieQuery.genre.id);
-        if (movieQuery.provider) {
-            params.with_watch_providers = String(movieQuery.provider.provider_id);
+        if (movieQuery.genreId) params.with_genres = String(movieQuery.genreId);
+        if (movieQuery.providerId) {
+            params.with_watch_providers = String(movieQuery.providerId);
             params.watch_region = 'US';
         }
-        if (movieQuery.selector) params.sort_by = movieQuery.selector.param;
+        if (movieQuery.selectorParam) params.sort_by = movieQuery.selectorParam;
         return apiClient
             .get<FetchMoviesResponse>('/3/discover/movie', {params: {page: pageParam, ...params}})
             .then(res => res.data)

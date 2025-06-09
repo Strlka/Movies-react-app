@@ -9,20 +9,13 @@ import MovieHeading from "./components/MovieHeading";
 import { FaAnglesUp } from "react-icons/fa6";
 
 
-export interface MovieQuery {
-  genreId?: number;
-  providerId?: number;
-  selectorParam?: string;
-}
 
 
 function App() {
 
   const showAside = useBreakpointValue({ base: false, lg: true });
 
-  const [movieQuery, setMovieQuery] = useState<MovieQuery>({} as MovieQuery);
-  const [searchText, setSearchText] = useState('');
-  const [isSearching, setSearching] = useState(false);
+
   const [foudMoviesTotalResults,  setFoudMoviesTotalResults] = useState<number | ''>('');
   const [isShowScrollToTop, setShowScrollToTop] = useState(false);
 
@@ -64,57 +57,22 @@ function App() {
         }}
       >
         <GridItem area="nav">
-          <NavBar onSearch={(searchText) => {
-              setSearchText(searchText);
-              setSearching(true)
-            }} 
-        />
+          <NavBar />
         </GridItem>
         {showAside && (
           <GridItem area="aside" paddingX="10px">
-            <GenreList
-              onSelectGenre={(genreId) => {
-                setMovieQuery({ ...movieQuery, genreId });
-                setSearching(false);
-              }}
-              selectedGenreId={movieQuery.genreId}
-            />
+            <GenreList />
           </GridItem>
         )}
         <GridItem area="main" overflowY="auto" ref={mainRef}>
           <Box paddingLeft={3}>
-            <MovieHeading 
-              movieQuery={movieQuery} 
-              searchText={searchText} 
-              isSearching={isSearching}
-              foudMoviesTotalResults={foudMoviesTotalResults} 
-              resetSearching={() => {setSearching(false); setMovieQuery({} as  MovieQuery)}}
-              resetGenre={() => {setMovieQuery({ ...movieQuery, genreId: undefined})}}
-              resetProvider={() => {setMovieQuery({ ...movieQuery, providerId: undefined})}}
-            />
+            <MovieHeading foudMoviesTotalResults={foudMoviesTotalResults} />
             <HStack gap={5} marginBottom={5}>
-              <ProviderSelector
-                onSelectProvider={(providerId) => {
-                  setMovieQuery({ ...movieQuery, providerId });
-                  setSearching(false);
-                }}
-                selectedProviderId={movieQuery.providerId}
-              />
-              <SortSelector
-                onSortSelector={(selectorParam) => {
-                  setMovieQuery({ ...movieQuery, selectorParam });
-                  setSearching(false);
-                }}
-                sortSelectorParam={movieQuery.selectorParam}
-              />
+              <ProviderSelector />
+              <SortSelector />
             </HStack>
           </Box>
-          <MovieGrid
-            movieQuery={movieQuery}
-            searchText={searchText}
-            isSearching={isSearching}
-            onTotalResultsChange={(totalResults: number | '') => setFoudMoviesTotalResults(totalResults)}
-          />
+          <MovieGrid onTotalResultsChange={(totalResults: number | '') => setFoudMoviesTotalResults(totalResults)} />
         </GridItem>
         {isShowScrollToTop && <IconButton 
           variant='subtle' 

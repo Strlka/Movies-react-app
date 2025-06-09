@@ -1,12 +1,9 @@
 import { Button, Portal, Menu } from '@chakra-ui/react'
 import { BsChevronDown } from 'react-icons/bs'
 import { useColorModeValue } from './ui/color-mode';
-import useAllProviders, { getProvidersWithId, Provider } from '../hooks/useAllProviders';
+import useAllProviders, { getProvidersWithId } from '../hooks/useAllProviders';
+import useMovieQueryStore from '../store';
 
-interface Props {
-  onSelectProvider: (providerId: number) => void;
-  selectedProviderId?: number;
-}
 
 const MenuTrigger = (props: any) => {
   return <Menu.Trigger {...props} />
@@ -43,7 +40,10 @@ export const providersNameTopList = [
   'Max Amazon Channel',
 ];
 
-const ProviderSelector = ({onSelectProvider, selectedProviderId}: Props) => {
+const ProviderSelector = () => {
+
+    const selectedProviderId = useMovieQueryStore(s => s.movieQuery.providerId);
+    const setProviderId = useMovieQueryStore(s => s.setProviderId);
 
     const hoverBgColor = useColorModeValue('teal.400', 'teal.200');
     const hoverColor = useColorModeValue('white', 'black');
@@ -70,7 +70,7 @@ const ProviderSelector = ({onSelectProvider, selectedProviderId}: Props) => {
         <Menu.Positioner >
           <Menu.Content >
             {providersTopList.map((p) => (
-              <MenuItem key={p!.provider_name} onClick={() => onSelectProvider(p!.provider_id)} cursor='pointer' _hover={{ bg: hoverBgColor, color: hoverColor }}>
+              <MenuItem key={p!.provider_name} onClick={() => setProviderId(p!.provider_id)} cursor='pointer' _hover={{ bg: hoverBgColor, color: hoverColor }}>
                 {p?.provider_name}
               </MenuItem>
             ))}

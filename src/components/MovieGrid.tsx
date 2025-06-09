@@ -6,25 +6,22 @@ import MoviePage from './MoviePage';
 import { useEffect, useMemo, useState } from 'react';
 import MovieCardSkeleton from './MovieCardSkeleton';
 import MovieCardContainer from './MovieCardContainer';
-import {MovieQuery} from '../App';
 import useSearchMovies from '../hooks/useSearchMovies';
 import InfiniteScroll from 'react-infinite-scroll-component';
-
-
-
+import useMovieQueryStore from '../store';
 
 
 interface Props {
-  movieQuery: MovieQuery;
-  searchText: string;
-  isSearching: boolean;
   onTotalResultsChange: ((totalResults: number | '') => void);
 }
 
 
-const MovieGrid = ({movieQuery, searchText, isSearching, onTotalResultsChange }: Props) => {
+const MovieGrid = ({ onTotalResultsChange }: Props) => {
+
+  const searchText = useMovieQueryStore(s => s.movieQuery.searchText);
+  const isSearching = !!searchText; 
     
-  const {data: moviesResults, error, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useMovies(movieQuery);
+  const {data: moviesResults, error, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useMovies();
 
   const movies: Movie[] = useMemo(() => {
     if (typeof moviesResults === 'undefined') {
@@ -42,7 +39,7 @@ const MovieGrid = ({movieQuery, searchText, isSearching, onTotalResultsChange }:
           isLoading: isSearchLoading, 
           hasNextPage: hasSearchingNextPage,
           isFetchingNextPage: isFetchingSearchingNextPage 
-        } = useSearchMovies(searchText);
+        } = useSearchMovies(searchText || '');
   
   const foundMovies: Movie[] = useMemo(() => {
     if (typeof foundResults === 'undefined') {

@@ -1,14 +1,9 @@
 import { Button, Menu, Portal } from '@chakra-ui/react'
 import { BsChevronDown } from 'react-icons/bs'
 import { useColorModeValue } from './ui/color-mode';
+import useMovieQueryStore from '../store';
 
 
-
-
-interface Props {
-    onSortSelector: (selectorParam: string) => void;
-    sortSelectorParam?: string;
-  }
 
 export interface Selector {
     id: number;
@@ -26,7 +21,7 @@ const MenuItem = (props: any) => {
 
 
 
-const SortSelector = ({onSortSelector, sortSelectorParam} : Props) => {
+const SortSelector = () => {
 
   const selectors: Selector[] = [
     {
@@ -59,7 +54,10 @@ const SortSelector = ({onSortSelector, sortSelectorParam} : Props) => {
         name: 'Vote count',
         param: 'vote_count.desc'
     },
-  ]
+  ];
+
+  const sortSelectorParam = useMovieQueryStore(s => s.movieQuery.selectorParam);
+  const setSelectorParam = useMovieQueryStore(s => s.setSelectorParam);
 
   const selector = selectors.find(selector => selector.param === sortSelectorParam);
 
@@ -80,7 +78,7 @@ const SortSelector = ({onSortSelector, sortSelectorParam} : Props) => {
         <Menu.Positioner >
           <Menu.Content>
             {selectors.map((selector) => (
-              <MenuItem key={selector.id} onClick={() => onSortSelector(selector.param)} cursor='pointer' _hover={{ bg: hoverBgColor, color: hoverColor }}>
+              <MenuItem key={selector.id} onClick={() => setSelectorParam(selector.param)} cursor='pointer' _hover={{ bg: hoverBgColor, color: hoverColor }}>
                 {selector.name}
               </MenuItem>
             ))}

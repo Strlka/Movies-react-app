@@ -1,28 +1,32 @@
 import useGenres from '../hooks/useGenres';
-import { MovieQuery } from '../App';
 import { CloseButton, Heading, HStack, Spinner, Text } from '@chakra-ui/react'
 import useAllProviders, { getProvidersWithId } from '../hooks/useAllProviders';
 import { providersNameTopList } from './ProviderSelector';
+import useMovieQueryStore from '../store';
 
 
 interface Props {
-    movieQuery: MovieQuery;
-    searchText: string;
-    isSearching: boolean;
     foudMoviesTotalResults: number | '';
-    resetSearching: () => void;
-    resetGenre: () => void;
-    resetProvider: () => void;
 }
 
-const MovieHeading = ({movieQuery, searchText, isSearching, foudMoviesTotalResults, resetSearching, resetGenre, resetProvider}: Props) => {
+const MovieHeading = ({foudMoviesTotalResults}: Props) => {
 
   const {data: genres} = useGenres();
-  const genre = genres?.find(genre => genre.id === movieQuery.genreId); 
+  const selectedGenreId = useMovieQueryStore(s => s.movieQuery.genreId);
+  const genre = genres?.find(genre => genre.id === selectedGenreId); 
+  const resetGenre = useMovieQueryStore(s => s.resetGenreId);
+
 
   const { data: providersList } = useAllProviders();
   const providersTopList = getProvidersWithId(providersNameTopList, (providersList || []));
-  const provider = providersTopList.find(provider => provider?.provider_id === movieQuery.providerId);
+  const selectedProviderId = useMovieQueryStore(s => s.movieQuery.providerId);
+  const provider = providersTopList.find(provider => provider?.provider_id === selectedProviderId);
+  const resetProvider = useMovieQueryStore(s => s.resetProviderId);
+
+  const searchText = useMovieQueryStore(s => s.movieQuery.searchText);
+  const resetSearching = useMovieQueryStore(s => s.resetSearchText);
+
+  const isSearching = !!searchText; 
 
 
   return (
@@ -31,7 +35,7 @@ const MovieHeading = ({movieQuery, searchText, isSearching, foudMoviesTotalResul
         <HStack gap={5} justifyContent='space-between' width='100%' paddingRight='10px'>
             <HStack>
               <Text as="span" word-break='break-all'>Search movies: {searchText}...</Text>
-              <CloseButton size="xs" variant='plain' onClick={resetSearching}/>
+              <CloseButton size="xs" variant='plain' onClick={() => resetSearching()}/>
             </HStack>
             <HStack gap={5}>
               <Text>{typeof foudMoviesTotalResults === 'number' ? `total results: ${foudMoviesTotalResults}`: 'total results: '}</Text>

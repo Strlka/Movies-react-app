@@ -1,7 +1,5 @@
-import { AxiosResponse, CanceledError } from "axios";
+import useMovieQueryStore from "../store";
 import apiClient from "../services/api-client";
-import { useEffect, useState } from "react";
-import { MovieQuery } from "../App";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 
@@ -27,7 +25,11 @@ interface FetchMoviesResponse {
 }    
 
 
-const useMovies = (movieQuery: MovieQuery) => useInfiniteQuery({
+const useMovies = () => {
+
+    const movieQuery = useMovieQueryStore(s => s.movieQuery);
+
+    return useInfiniteQuery({
     queryKey: ['movies', movieQuery],
     queryFn: ({pageParam}) => {
         const params: any = {};
@@ -50,6 +52,7 @@ const useMovies = (movieQuery: MovieQuery) => useInfiniteQuery({
     initialPageParam: 1,
     staleTime: 24 * 60 * 60 * 1000, //24h
 })
+}
 
 
 //     const [movies, setMovies] = useState<Movie[]>([]);

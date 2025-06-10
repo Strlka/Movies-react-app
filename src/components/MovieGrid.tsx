@@ -18,7 +18,7 @@ interface Props {
 
 const MovieGrid = ({ onTotalResultsChange }: Props) => {
 
-  const setCurrentMovie = useMovieQueryStore(s => s.setCurrentMovie);
+  const navigate = useNavigate();
 
   const searchText = useMovieQueryStore(s => s.movieQuery.searchText);
   const isSearching = !!searchText; 
@@ -56,11 +56,16 @@ const MovieGrid = ({ onTotalResultsChange }: Props) => {
   }, [foundResults]);
 
 
+
+  // const slug = (movie: Movie) => {
+  //   return movie.id + '_' + movie.title
+  //     .trim()
+  //     .toLowerCase()
+  //     .replace(/\s+/g, '-')
+  //     .replace(/[^\w-]/g, '') 
+  // }
+
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-  const navigate = useNavigate();
-
-
 
   if (error) return <Text>{error.message}</Text>;
 
@@ -76,7 +81,7 @@ const MovieGrid = ({ onTotalResultsChange }: Props) => {
         {!isLoading && ((movies.length === 0 && !isLoading) || (foundMovies?.length === 0 && isSearching && !isSearchLoading)) && <Text gap={10}>Movies not foud</Text>}
         {(isSearching ? foundMovies : movies).map((movie) => (
           <MovieCardContainer key={movie.id}>
-            <MovieCard movie={movie} genres={genres || []} onClick={() =>{setCurrentMovie(movie); navigate(`${movie.title.replace(/\s/g, "_")}`)}} />
+            <MovieCard movie={movie} genres={genres || []} onClick={() => navigate(`movies/${movie.id}`)} />
           </MovieCardContainer>
           ))}
         {(isLoading || isSearchLoading || isFetchingNextPage || isFetchingSearchingNextPage) && skeletons.map((skeleton) => (

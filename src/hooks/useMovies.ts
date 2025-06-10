@@ -15,7 +15,6 @@ export interface Movie {
     original_language: string;
     popularity: number;
     vote_count: number;
-    
 }
 
 interface FetchMoviesResponse {

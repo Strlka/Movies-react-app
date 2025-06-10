@@ -18,7 +18,23 @@ const GenreList = () => {
       <Heading marginY={5}>Genres</Heading>
       <List.Root listStyleType='none'>
         {data?.map(genre => <List.Item key={genre.id} paddingY='5px'>
-          <Button whiteSpace='normal' textAlign='left' onClick={() => setGernreId(genre.id)} fontWeight={selectedGenreId === genre.id ? 'bold' : 'normal'} variant='plain' colorPalette='teal' fontSize='md' height='auto' padding='0' _hover={{ textDecoration: 'underline', background: 'none' }}>{genre.name}</Button>
+          <Button 
+            whiteSpace='normal' 
+            textAlign='left' 
+            onClick={() => setGernreId(genre.id)} 
+            fontWeight={selectedGenreId === genre.id ? 'bold' : 'normal'} 
+            variant='plain' 
+            colorPalette='teal' 
+            fontSize='md' height='auto' 
+            padding='0' 
+            _hover={{ 
+              background: 'none',
+              transform: 'scale(1.03)',
+              fontWeight: 'bold' 
+            }}
+            >
+              {genre.name}
+            </Button>
         </List.Item>)}
       </List.Root>
     </>

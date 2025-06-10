@@ -1,14 +1,14 @@
-import { SimpleGrid, Text, Box, Spinner } from '@chakra-ui/react';
+import { SimpleGrid, Text, Spinner } from '@chakra-ui/react';
 import useGenres from '../hooks/useGenres';
 import useMovies, { Movie } from '../hooks/useMovies';
 import MovieCard from './MovieCard';
-import MoviePage from './MoviePage';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import MovieCardSkeleton from './MovieCardSkeleton';
 import MovieCardContainer from './MovieCardContainer';
 import useSearchMovies from '../hooks/useSearchMovies';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import useMovieQueryStore from '../store';
+import { useNavigate } from 'react-router-dom';
 
 
 interface Props {
@@ -17,6 +17,8 @@ interface Props {
 
 
 const MovieGrid = ({ onTotalResultsChange }: Props) => {
+
+  const setCurrentMovie = useMovieQueryStore(s => s.setCurrentMovie);
 
   const searchText = useMovieQueryStore(s => s.movieQuery.searchText);
   const isSearching = !!searchText; 
@@ -39,7 +41,7 @@ const MovieGrid = ({ onTotalResultsChange }: Props) => {
           isLoading: isSearchLoading, 
           hasNextPage: hasSearchingNextPage,
           isFetchingNextPage: isFetchingSearchingNextPage 
-        } = useSearchMovies(searchText || '');
+        } = useSearchMovies(searchText);
   
   const foundMovies: Movie[] = useMemo(() => {
     if (typeof foundResults === 'undefined') {
@@ -56,19 +58,14 @@ const MovieGrid = ({ onTotalResultsChange }: Props) => {
 
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-  const [showMoviePage, setShowMoviePage] = useState(false);
-  const [currentMovie, setCurrentMovie] = useState({});
+  const navigate = useNavigate();
 
-  const backToMoviesCards = () => {
-    setCurrentMovie({});
-    setShowMoviePage(false);
-  }
+
 
   if (error) return <Text>{error.message}</Text>;
 
   return (
     <>
-      {!showMoviePage && 
       <InfiniteScroll
         dataLength={isSearching ? foundMovies.length : movies.length}
         hasMore={isSearching ? !!hasSearchingNextPage : !!hasNextPage}
@@ -79,7 +76,7 @@ const MovieGrid = ({ onTotalResultsChange }: Props) => {
         {!isLoading && ((movies.length === 0 && !isLoading) || (foundMovies?.length === 0 && isSearching && !isSearchLoading)) && <Text gap={10}>Movies not foud</Text>}
         {(isSearching ? foundMovies : movies).map((movie) => (
           <MovieCardContainer key={movie.id}>
-            <MovieCard movie={movie} genres={genres || []} onClick={() => {setShowMoviePage(true), setCurrentMovie(movie)}} />
+            <MovieCard movie={movie} genres={genres || []} onClick={() =>{setCurrentMovie(movie); navigate(`${movie.title.replace(/\s/g, "_")}`)}} />
           </MovieCardContainer>
           ))}
         {(isLoading || isSearchLoading || isFetchingNextPage || isFetchingSearchingNextPage) && skeletons.map((skeleton) => (
@@ -88,10 +85,7 @@ const MovieGrid = ({ onTotalResultsChange }: Props) => {
           </MovieCardContainer>
           ))} 
       </SimpleGrid>
-      </InfiniteScroll>}
-      {showMoviePage && <Box padding='10px' gap={10}> 
-        <MoviePage movie={currentMovie as Movie} genres={genres || []} backToMoviesCards={backToMoviesCards}/>
-      </Box>}
+      </InfiniteScroll>
     </>
   )
 }

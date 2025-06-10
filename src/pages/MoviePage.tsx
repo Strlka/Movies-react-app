@@ -1,21 +1,22 @@
 import { Box, Button, Heading, HStack, Image, Text } from "@chakra-ui/react"
-import { Movie } from "../hooks/useMovies"
-import { Genre, getGenresName } from "../hooks/useGenres";
+import useGenres, { getGenresName } from "../hooks/useGenres";
 import { getPosterUrl } from "../services/image-url";
-import ProvidersIconList from "./ProvidersIconList";
-import VoteAverage from "./VoteAverage";
+import ProvidersIconList from "../components/ProvidersIconList";
+import VoteAverage from "../components/VoteAverage";
+import { useNavigate } from "react-router-dom";
+import useMovieQueryStore from "../store";
 
 
-interface MoviePage {
-    movie: Movie;
-    genres: Genre[];
-    backToMoviesCards: () => void;
-}
 
-const MoviePage = ({movie, genres, backToMoviesCards}: MoviePage) => {
+const MoviePage = () => {
 
+    const movie = useMovieQueryStore(s => s.currentMovie);
+
+    const {data: genres} = useGenres();
     const genresList = getGenresName(movie.genre_ids, genres);
     let date = new Date(movie.release_date);
+
+    const navigate = useNavigate();
 
   return (
     <Box
@@ -23,6 +24,8 @@ const MoviePage = ({movie, genres, backToMoviesCards}: MoviePage) => {
     position="relative"
     alignItems="center"
     justifyContent="center"
+    padding='10px' 
+    gap={10}
   >
       <Box>
         <Heading fontSize='4xl'>{movie.title}</Heading>
@@ -35,7 +38,7 @@ const MoviePage = ({movie, genres, backToMoviesCards}: MoviePage) => {
         </HStack>
         <Text maxWidth='750px' marginY={5}>{movie.overview}</Text>
         <ProvidersIconList movie_id={movie.id}/>
-        <Button onClick={backToMoviesCards} marginTop={5}>Back to movies list</Button>
+        <Button onClick={() => navigate('/')} marginTop={5}>Back to movies list</Button>
       </Box>
     </Box>
   )

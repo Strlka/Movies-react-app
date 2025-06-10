@@ -25,7 +25,7 @@ interface FetchMoviesResponse {
 }    
 
 
-const useSearchMovies = (searchText: string) => useInfiniteQuery({
+const useSearchMovies = (searchText?: string) => useInfiniteQuery({
     queryKey: ['foundMovies', searchText],
     queryFn: ({pageParam}) => {
         return apiClient

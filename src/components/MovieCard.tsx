@@ -15,7 +15,6 @@ interface Props {
 const MovieCard = ({movie, genres, onClick}: Props) => {
 
 const genresList = getGenresName(movie.genre_ids, genres);
-
 const date = new Date(movie.release_date);
 
   return (

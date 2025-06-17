@@ -24,12 +24,13 @@ const GenreList = () => {
             onClick={() => setGernreId(genre.id)} 
             fontWeight={selectedGenreId === genre.id ? 'bold' : 'normal'} 
             variant='plain' 
-            colorPalette='teal' 
+            color={{_dark: 'teal.400', _light: 'black'}} 
             fontSize='md' height='auto' 
             padding='0' 
             _hover={{ 
               background: 'none',
               transform: 'scale(1.03)',
+              transition: 'transform .20s ease-in',
               fontWeight: 'bold' 
             }}
             >

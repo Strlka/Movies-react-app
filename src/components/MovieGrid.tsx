@@ -80,7 +80,7 @@ const MovieGrid = ({ onTotalResultsChange }: Props) => {
       <SimpleGrid columns={{sm: 2, md: 3, lg: 4, xl: 5}} padding='10px' gap={5}>
         {!isLoading && ((movies.length === 0 && !isLoading) || (foundMovies?.length === 0 && isSearching && !isSearchLoading)) && <Text gap={10}>Movies not foud</Text>}
         {(isSearching ? foundMovies : movies).map((movie) => (
-          <MovieCardContainer key={movie.id}>
+          <MovieCardContainer key={isSearching ? `found_${movie.id}` : `movie_${movie.id}`}>
             <MovieCard movie={movie} genres={genres || []} onClick={() => navigate(`movies/${movie.id}`)} />
           </MovieCardContainer>
           ))}

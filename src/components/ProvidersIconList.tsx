@@ -1,4 +1,4 @@
-import { HStack, Image } from "@chakra-ui/react";
+import { HStack, Image, Stack } from "@chakra-ui/react";
 import useProviders from "../hooks/useProviders";
 import { getProviderImageUrl } from "../services/image-url";
 import { Tooltip } from "./ui/tooltip";
@@ -12,7 +12,11 @@ const ProvidersIconList = ({movie_id}: Props) => {
 const {data} = useProviders(movie_id);
 
 
-  return (
+
+  return ( 
+    data?.length !== 0 &&
+    <Stack marginBottom='12px' fontWeight='bold' color='white'>
+      Where to watch: 
     <HStack>
       {data?.map((provider) => {
           return <Tooltip content={provider.provider_name} key={provider.provider_id}>
@@ -26,6 +30,7 @@ const {data} = useProviders(movie_id);
                 </Tooltip>
       })}
     </HStack>
+    </Stack>
   )
 }
 

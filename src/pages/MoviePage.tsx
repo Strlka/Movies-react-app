@@ -1,9 +1,10 @@
-import { Box, Button, Heading, HStack, Image, Spinner, Text } from "@chakra-ui/react"
+import { Badge, Box, Button, Heading, HStack, Spinner, Stack, Text } from "@chakra-ui/react"
 import { getPosterUrl } from "../services/image-url";
 import ProvidersIconList from "../components/ProvidersIconList";
 import VoteAverage from "../components/VoteAverage";
 import { useNavigate, useParams } from "react-router-dom";
 import useMovie from "../hooks/useMovie";
+import MovieVideo from "../components/MovieVideo";
 
 
 
@@ -13,9 +14,9 @@ const MoviePage = () => {
    
     const {data: movie, isLoading, error} = useMovie(slug);
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
-    if (isLoading) return <Spinner />;
+    if (isLoading) return <Box padding='10px'><Spinner size='xl' color='teal.400'/></Box>;
     if (error || !movie) return <Text>Error loading movie.</Text>;
  
  
@@ -26,26 +27,62 @@ const MoviePage = () => {
 
   return (
     <Box
+    minHeight='100vh'
     overflow='hidden'
     position="relative"
     alignItems="center"
     justifyContent="center"
     padding='10px' 
     gap={10}
-  >
-      <Box>
-        <Heading fontSize='4xl'>{movie.title}</Heading>
-        <Image src={getPosterUrl(movie.backdrop_path)} marginY={10} />
-        <VoteAverage vote_average={movie.vote_average} />
-        <Text marginY={5}>{genresList}</Text>
-        <HStack justify='space-between' maxWidth='750px'>
-          <Text marginY={5}>{date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</Text>
-          <Text>{movie.original_language}</Text>
+    backgroundImage={`linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.8)), url(${getPosterUrl(movie.backdrop_path)})`}
+    backgroundSize="cover"
+    backgroundPosition="center"
+    backgroundRepeat="no-repeat"
+    backgroundAttachment="fixed" 
+    borderRadius={10}
+    >
+      <Stack 
+        justifyContent='space-between'
+        direction={{sm: 'column', md: 'column', lg: 'column', xl: 'row'}}
+      >
+      <Stack
+      width={{sm: 'auto', md: '560px', lg: '560px', xl: '2/5'}}
+      maxWidth={{sm: '560px' }}
+      background={{
+        _dark: "linear-gradient(to bottom, rgba(3,39,38,0.7), rgba(13,148,136,0.9))",
+        _light: "linear-gradient(to bottom, rgba(45,212,191,0.5), rgba(255,255,255,0.9))"
+      }}
+      borderRadius={10}
+      marginTop={14}
+      marginLeft={{sm: '12px', md: '56px', lg: '56px', xl: '56px'}}
+      padding='10px'
+      >
+        <HStack justifyContent='space-between'>
+          <Heading fontSize='4xl'>{movie.title}</Heading>
+          <VoteAverage vote_average={movie.vote_average} />
+        </HStack>
+        <Text marginY={5} fontStyle='italic'>{movie.tagline}</Text>
+        <Text marginY={5} fontWeight='bold'>{genresList}</Text>
+        <HStack justify='flex-start' maxWidth='750px'>
+          <Text fontWeight='bold' marginY={5}>{date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>
+          <Text fontWeight='bold' marginLeft={10}>{movie.original_language}</Text>
         </HStack>
         <Text maxWidth='750px' marginY={5}>{movie.overview}</Text>
-        <ProvidersIconList movie_id={movie.id}/>
-        <Button onClick={() => navigate('/')} marginTop={5}>Back to movies list</Button>
-      </Box>
+        <Text fontWeight='bold'>Budget: {movie.budget ? `$${movie.budget.toLocaleString()}` : 'Unknown'}</Text>
+        {/* <Button onClick={() => navigate('/')} marginTop={5} width='2/5'>Back to movies list</Button> */}
+      </Stack>
+      <Stack 
+        marginTop={{sm: '40px', md: '40px', lg: '40px', xl: '56px'}}
+        marginLeft={{sm: '12px', md: '56px', lg: '56px', xl: '56px'}}
+        marginRight={14}
+        display="flex" justifyContent='center'
+      >
+        <MovieVideo movieId={slug}/>
+        <Box marginTop={10}>
+          <ProvidersIconList movie_id={movie.id}/>
+        </Box>
+      </Stack>
+      </Stack>
     </Box>
   )
 }

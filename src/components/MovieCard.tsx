@@ -20,12 +20,12 @@ const date = new Date(movie.release_date);
   return (
     <Card.Root height="100%" display="flex" flexDirection="column">
       <Box position='relative' marginBottom={6}>
-      <AspectRatio ratio={3 / 5}>
-        <Image src={getImageUrl(movie.poster_path)} cursor='pointer' onClick={onClick} objectFit="cover"/>
+        <AspectRatio ratio={3 / 5}>
+          <Image src={getImageUrl(movie.poster_path)} cursor='pointer' onClick={onClick} objectFit="cover"/>
         </AspectRatio>
-         <Box position='absolute' left='50%' transform="translate(-50%, -35%)" zIndex="1">
-            <VoteAverage vote_average={movie.vote_average} />
-         </Box>
+        <Box position='absolute' left='50%' transform="translate(-50%, -35%)" zIndex="1">
+          <VoteAverage vote_average={movie.vote_average} />
+        </Box>
       </Box>
       <CardBody flex="1" display="flex" flexDirection="column">
         <Heading whiteSpace='normal' fontSize='xl' marginBottom={1} paddingTop='2' onClick={onClick} cursor='pointer' _hover={{color: 'teal.400' }}>{movie.title.length <= 42 ? movie.title : (movie.title.slice(0, 42) + '...') }</Heading>

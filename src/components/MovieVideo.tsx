@@ -11,7 +11,9 @@ const MovieVideo = ({movieId}: Props) => {
     const {data, isLoading, error} = useVideos(movieId);
 
     if (isLoading) return <Box padding='10px'><Spinner size='xl' color='teal.400'/></Box>;
-    if (!data || error) return null;
+    if (!data || data.length === 0 || error) return null;
+
+    console.log(data);
 
   return (
     <iframe 
@@ -19,7 +21,7 @@ const MovieVideo = ({movieId}: Props) => {
         width='560'
         height='315'
         allow='autoplay; encrypted-media; picture-in-picture'
-        style={{ borderRadius: '12px',  }}
+        style={{ borderRadius: '10px',  }}
     ></iframe>
   )
 }

@@ -23,6 +23,7 @@ const useVideos = (movie_id?: string) => useQuery({
         .then(res => res.data.results),
 
     staleTime: 24 * 60 * 60 * 1000, //24h,
+    enabled: !!movie_id,
          
 });
 

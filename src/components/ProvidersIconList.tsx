@@ -15,7 +15,7 @@ const {data} = useProviders(movie_id);
 
   return ( 
     data?.length !== 0 &&
-    <Stack marginBottom='12px' fontWeight='bold' color='white'>
+    <Stack marginBottom='12px' fontWeight='bold' color='white' fontSize='2xl'>
       Where to watch: 
     <HStack>
       {data?.map((provider) => {

@@ -5,6 +5,7 @@ import VoteAverage from "../components/VoteAverage";
 import { useNavigate, useParams } from "react-router-dom";
 import useMovie from "../hooks/useMovie";
 import MovieVideo from "../components/MovieVideo";
+import MovieImages from "../components/MovieImages";
 
 
 
@@ -27,19 +28,19 @@ const MoviePage = () => {
 
   return (
     <Box
-    minHeight='100vh'
-    overflow='hidden'
-    position="relative"
-    alignItems="center"
-    justifyContent="center"
-    padding='10px' 
-    gap={10}
-    backgroundImage={`linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.8)), url(${getPosterUrl(movie.backdrop_path)})`}
-    backgroundSize="cover"
-    backgroundPosition="center"
-    backgroundRepeat="no-repeat"
-    backgroundAttachment="fixed" 
-    borderRadius={10}
+      minHeight='100vh'
+      overflow='hidden'
+      position="relative"
+      alignItems="center"
+      justifyContent="center"
+      padding='10px' 
+      gap={10}
+      backgroundImage={`linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url(${getPosterUrl(movie.backdrop_path)})`}
+      backgroundSize="cover"
+      backgroundPosition="center"
+      backgroundRepeat="no-repeat"
+      backgroundAttachment="fixed" 
+      borderRadius={10}
     >
       <Stack 
         justifyContent='space-between'
@@ -49,8 +50,8 @@ const MoviePage = () => {
       width={{sm: 'auto', md: '560px', lg: '560px', xl: '2/5'}}
       maxWidth={{sm: '560px' }}
       background={{
-        _dark: "linear-gradient(to bottom, rgba(3,39,38,0.7), rgba(13,148,136,0.9))",
-        _light: "linear-gradient(to bottom, rgba(45,212,191,0.5), rgba(255,255,255,0.9))"
+        _dark: "linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7))",
+        _light: "linear-gradient(to bottom, rgba(255,255,255,0.6), rgba(255,255,255,0.9))"
       }}
       borderRadius={10}
       marginTop={14}
@@ -83,6 +84,7 @@ const MoviePage = () => {
         </Box>
       </Stack>
       </Stack>
+      <MovieImages movieId={slug}/>
     </Box>
   )
 }

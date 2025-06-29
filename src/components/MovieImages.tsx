@@ -16,8 +16,6 @@ const MovieImages = ({movieId}: Props) => {
 
     if (!isLoading && (!data || data.length === 0 || error)) return null;
 
-    console.log(data?.map((p) => p.aspect_ratio));
-
 
   return (
     <>
@@ -34,7 +32,7 @@ const MovieImages = ({movieId}: Props) => {
             marginLeft={{sm: '12px', md: '56px', lg: '56px', xl: '56px'}}
             gap={5}
         >
-        {data?.map((poster) => (poster.aspect_ratio === 0.667) && <Image key={poster.file_path} src={getPosterUrl(poster.file_path)} rounded="xl" />).splice(0, 10)}
+        {data?.map((poster) => (poster.aspect_ratio === 0.667) && <Image key={poster.file_path} src={getPosterUrl(poster.file_path)} rounded="lg" />).splice(0, 10)}
         {isLoading && skeletons.map((skeleton) => <Skeleton key={skeleton} height='400px' />)}
         </SimpleGrid>
     </>

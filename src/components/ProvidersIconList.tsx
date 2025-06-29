@@ -1,4 +1,4 @@
-import { HStack, Image, Stack } from "@chakra-ui/react";
+import { HStack, Image, Stack, Wrap } from "@chakra-ui/react";
 import useProviders from "../hooks/useProviders";
 import { getProviderImageUrl } from "../services/image-url";
 import { Tooltip } from "./ui/tooltip";
@@ -17,7 +17,7 @@ const {data} = useProviders(movie_id);
     data?.length !== 0 &&
     <Stack marginBottom='12px' fontWeight='bold' color='white' fontSize='2xl'>
       Where to watch: 
-    <HStack>
+    <Wrap gap='2'>
       {data?.map((provider) => {
           return <Tooltip content={provider.provider_name} key={provider.provider_id}>
                   <Image 
@@ -29,7 +29,7 @@ const {data} = useProviders(movie_id);
                   />
                 </Tooltip>
       })}
-    </HStack>
+    </Wrap>
     </Stack>
   )
 }

@@ -1,4 +1,4 @@
-import { Box, Spinner } from '@chakra-ui/react';
+import { AspectRatio, Box, Spinner } from '@chakra-ui/react';
 import useVideos from '../hooks/useVideos';
 
 interface Props {
@@ -16,13 +16,13 @@ const MovieVideo = ({movieId}: Props) => {
     console.log(data);
 
   return (
-    <iframe 
-        src={`https://www.youtube.com/embed/${data[0].key}`}
-        width='560'
-        height='315'
-        allow='autoplay; encrypted-media; picture-in-picture'
-        style={{ borderRadius: '10px',  }}
-    ></iframe>
+    <AspectRatio ratio={16/9} style={{borderRadius:'10px', overflow: 'hidden'}}>
+      <iframe 
+          src={`https://www.youtube.com/embed/${data[0].key}`}
+          allow='autoplay; encrypted-media; picture-in-picture'
+      ></iframe>
+    </AspectRatio>
+
   )
 }
 

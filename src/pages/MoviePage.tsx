@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useMovie from "../hooks/useMovie";
 import MovieVideo from "../components/MovieVideo";
 import MovieImages from "../components/MovieImages";
+import ShareButtons from "../components/ShareButtons";
 
 
 
@@ -46,37 +47,45 @@ const MoviePage = () => {
         justifyContent='space-between'
         direction={{sm: 'column', md: 'column', lg: 'column', xl: 'row'}}
       >
-      <Stack
-      width={{sm: 'auto', md: '560px', lg: '560px', xl: '2/5'}}
-      maxWidth={{sm: '560px' }}
-      background={{
-        _dark: "linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7))",
-        _light: "linear-gradient(to bottom, rgba(255,255,255,0.6), rgba(255,255,255,0.9))"
-      }}
-      borderRadius={10}
-      marginTop={14}
-      marginLeft={{sm: '12px', md: '56px', lg: '56px', xl: '56px'}}
-      padding='10px'
-      >
-        <HStack justifyContent='space-between'>
-          <Heading fontSize='4xl'>{movie.title}</Heading>
-          <VoteAverage vote_average={movie.vote_average} />
-        </HStack>
-        <Text marginY={5} fontStyle='italic'>{movie.tagline}</Text>
-        <Text marginY={5} fontWeight='bold'>{genresList}</Text>
-        <HStack justify='flex-start' maxWidth='750px'>
-          <Text fontWeight='bold' marginY={5}>{date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>
-          <Text fontWeight='bold' marginLeft={10}>{movie.original_language}</Text>
-        </HStack>
-        <Text maxWidth='750px' marginY={5}>{movie.overview}</Text>
-        <Text fontWeight='bold'>Budget: {movie.budget ? `$${movie.budget.toLocaleString()}` : 'Unknown'}</Text>
-        {/* <Button onClick={() => navigate('/')} marginTop={5} width='2/5'>Back to movies list</Button> */}
+        <Stack
+          width={{sm: 'auto', md: '560px', lg: '560px', xl: '2/5'}}
+          maxWidth={{sm: '560px' }}
+          marginTop={14}
+          marginLeft={{sm: '12px', md: '56px', lg: '56px', xl: '56px'}}
+          gap={10}
+        >
+          <Stack
+            background={{
+              _dark: "linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7))",
+              _light: "linear-gradient(to bottom, rgba(255,255,255,0.6), rgba(255,255,255,0.9))"
+            }}
+            borderRadius={10}
+            padding='10px'
+          >
+            <HStack justifyContent='space-between'>
+              <Heading fontSize='4xl'>{movie.title}</Heading>
+              <VoteAverage vote_average={movie.vote_average} />
+            </HStack>
+            <Text marginY={5} fontStyle='italic'>{movie.tagline}</Text>
+            <Text marginY={5} fontWeight='bold'>{genresList}</Text>
+            <HStack justify='flex-start' maxWidth='750px'>
+              <Text fontWeight='bold' marginY={5}>{date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>
+              <Text fontWeight='bold' marginLeft={10}>{movie.original_language}</Text>
+            </HStack>
+            <Text maxWidth='750px' marginY={5}>{movie.overview}</Text>
+            <Text fontWeight='bold'>Budget: {movie.budget ? `$${movie.budget.toLocaleString()}` : 'Unknown'}</Text>
+            {/* <Button onClick={() => navigate('/')} marginTop={5} width='2/5'>Back to movies list</Button> */}
+          </Stack>
+          {slug && <ShareButtons slug={slug} title={movie.title}/>}
       </Stack>
       <Stack 
+        width={{sm: 'auto', md: '560px', lg: '560px', xl: '2/5'}}
+        maxWidth={{sm: '560px' }}
         marginTop={{sm: '40px', md: '40px', lg: '40px', xl: '56px'}}
         marginLeft={{sm: '12px', md: '56px', lg: '56px', xl: '56px'}}
-        marginRight={14}
-        display="flex" justifyContent='center'
+        marginRight={{sm: '0px', md: '0px', lg: '0px', xl: '40px'}}
+        display="flex" 
+        justifyContent='center'
       >
         <MovieVideo movieId={slug}/>
         <Box marginTop={10}>

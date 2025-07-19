@@ -1,12 +1,14 @@
-import { Badge, Box, Button, Heading, HStack, Spinner, Stack, Text } from "@chakra-ui/react"
+import { Box, Heading, HStack, Spinner, Stack, Text } from "@chakra-ui/react"
 import { getPosterUrl } from "../services/image-url";
 import ProvidersIconList from "../components/ProvidersIconList";
 import VoteAverage from "../components/VoteAverage";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useMovie from "../hooks/useMovie";
 import MovieVideo from "../components/MovieVideo";
 import MovieImages from "../components/MovieImages";
 import ShareButtons from "../components/ShareButtons";
+import AddFavoriteButton from "../components/FavoriteButton";
+import Rating from "../components/Rating";
 
 
 
@@ -55,12 +57,10 @@ const MoviePage = () => {
           gap={10}
         >
           <Stack
-            background={{
-              _dark: "linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7))",
-              _light: "linear-gradient(to bottom, rgba(255,255,255,0.6), rgba(255,255,255,0.9))"
-            }}
+            background="linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7))"
             borderRadius={10}
             padding='10px'
+            color='white'
           >
             <HStack justifyContent='space-between'>
               <Heading fontSize='4xl'>{movie.title}</Heading>
@@ -74,9 +74,12 @@ const MoviePage = () => {
             </HStack>
             <Text maxWidth='750px' marginY={5}>{movie.overview}</Text>
             <Text fontWeight='bold'>Budget: {movie.budget ? `$${movie.budget.toLocaleString()}` : 'Unknown'}</Text>
-            {/* <Button onClick={() => navigate('/')} marginTop={5} width='2/5'>Back to movies list</Button> */}
           </Stack>
-          {slug && <ShareButtons slug={slug} title={movie.title}/>}
+          <HStack justifyContent='space-between' padding='10px'>
+            <AddFavoriteButton movieId={movie.id}/>
+            <Rating movieId={movie.id}/>
+            {slug && <ShareButtons slug={slug} title={movie.title}/>}
+          </HStack>
       </Stack>
       <Stack 
         width={{sm: 'auto', md: '560px', lg: '560px', xl: '2/5'}}

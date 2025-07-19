@@ -1,20 +1,47 @@
-import { HStack, Image } from '@chakra-ui/react'
+import {Image, Box, Stack, HStack} from '@chakra-ui/react';
 import logo from '../assets/blue_square_2_themoviedb.svg';
 import ColorModeSwitch from './ColorModeSwitch';
 import SearchInput from './SearchInput';
-import { Link, useNavigate } from 'react-router-dom';
-
-
+import LoginButton from './LoginButton';
+import { useNavigate } from 'react-router-dom';
+import AccountButton from './AccountButton';
 
 const NavBar = () => {
   const navigate = useNavigate();
-  return (
-    <HStack padding='10px' gap={4}>
-      <Image src={logo} boxSize='60px' onClick={() => navigate('/')} cursor='pointer' />
-      <SearchInput />
-      <ColorModeSwitch />
-    </HStack>
-  )
-}
 
-export default NavBar
+  const sessionID = localStorage.getItem('session_id'); 
+
+  return (
+    <Stack
+      gap={2}
+      padding="10px"
+    >
+      <HStack
+        alignItems="center"
+        justifyContent='space-between'
+        gap={4}
+      >
+        <Image
+          src={logo}
+          boxSize="60px"
+          onClick={() => navigate('/')}
+          cursor="pointer"
+        />
+        <Box display={{ base: 'none', lg: 'block' }} flex='1'>
+          <SearchInput />
+        </Box>
+
+        <HStack>
+          {!sessionID && <LoginButton />}
+          {sessionID && <AccountButton />}
+          <ColorModeSwitch />
+        </HStack>
+      </HStack>
+      <Box display={{ base: 'block', lg: 'none' }} width="100%">
+        <SearchInput />
+      </Box>
+    </Stack>
+  );
+};
+
+export default NavBar;

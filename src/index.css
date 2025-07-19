@@ -1,3 +1,18 @@
 form {
     width: 100%;
 }
+
+.chakra-rating-group__item svg {
+    width: 32px !important;
+    height: 32px !important;
+}
+
+.chakra-rating-group__control {
+    gap: 10px; 
+}
+
+.chakra-rating-group__item:focus,
+.chakra-rating-group__item[data-focus] {
+  outline: none !important;
+  box-shadow: none !important;
+}

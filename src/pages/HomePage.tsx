@@ -8,8 +8,8 @@ import MovieHeading from "../components/MovieHeading";
 import { FaAnglesUp } from "react-icons/fa6";
 
 const HomePage = () => {
+    
     const showAside = useBreakpointValue({ base: false, lg: true });
-
 
     const [foudMoviesTotalResults,  setFoudMoviesTotalResults] = useState<number | ''>('');
     const [isShowScrollToTop, setShowScrollToTop] = useState(false);

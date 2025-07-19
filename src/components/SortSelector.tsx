@@ -69,7 +69,13 @@ const SortSelector = () => {
   return (
     <Menu.Root>
       <MenuTrigger asChild>
-        <Button variant='subtle' size="lg" borderRadius='5px' _hover={{color: 'teal.400' }} >
+        <Button 
+          variant='subtle' size="lg" 
+          borderRadius='5px'
+          _hover={{color: 'teal.400' }}
+          _focus={{ boxShadow: 'none', outline: 'none' }}
+          _focusVisible={{ boxShadow: undefined, outline: undefined }} 
+          >
           {selector?.name || 'Sort by'}
           <BsChevronDown />
         </Button>

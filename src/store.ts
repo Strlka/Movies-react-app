@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Movie } from "./hooks/useMovies";
+
 
 interface MovieQuery {
     genreId?: number;

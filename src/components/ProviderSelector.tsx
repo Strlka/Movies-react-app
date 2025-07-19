@@ -61,8 +61,15 @@ const ProviderSelector = () => {
   return (
     <Menu.Root>
       <MenuTrigger asChild>
-        <Button variant='subtle' size="lg" borderRadius='5px' _hover={{color: 'teal.400' }} >
-        {provider ? provider.provider_name : 'Providers'}
+        <Button 
+          variant='subtle' 
+          size="lg" 
+          borderRadius='5px' 
+          _hover={{color: 'teal.400' }} 
+          _focus={{ boxShadow: 'none', outline: 'none' }}
+          _focusVisible={{ boxShadow: undefined, outline: undefined }}
+          >
+          {provider ? provider.provider_name : 'Providers'}
           <BsChevronDown / >
         </Button>
       </MenuTrigger>

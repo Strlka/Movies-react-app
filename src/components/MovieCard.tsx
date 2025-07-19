@@ -1,4 +1,4 @@
-import { Movie } from '@/hooks/useMovies';
+import { Movie } from '../hooks/useMovies';
 import { Genre, getGenresName } from '../hooks/useGenres';
 import { AspectRatio, Badge, Box, Card, CardBody, Heading, HStack, Image, Stack, Text } from '@chakra-ui/react';
 import VoteAverage from './VoteAverage';

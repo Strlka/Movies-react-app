@@ -1,4 +1,4 @@
-import { Button, Portal, Menu } from '@chakra-ui/react'
+import { Button, Portal, Menu, Icon } from '@chakra-ui/react'
 import { BsChevronDown } from 'react-icons/bs'
 import { useColorModeValue } from './ui/color-mode';
 import useAllProviders, { getProvidersWithId } from '../hooks/useAllProviders';
@@ -70,7 +70,7 @@ const ProviderSelector = () => {
           _focusVisible={{ boxShadow: undefined, outline: undefined }}
           >
           {provider ? provider.provider_name : 'Providers'}
-          <BsChevronDown / >
+          <Icon as={BsChevronDown} / >
         </Button>
       </MenuTrigger>
       <Portal>

@@ -9,10 +9,12 @@ interface Props {
 
 const UserAvatar = ({sessionID}: Props) => {
     
-    const {data: account, isLoading, error} = useAccount(sessionID || '');
+  const {data: account, isLoading, error} = useAccount(sessionID || '');
+
+  if (!account) return null;
 
   return (
-    account && <Image
+    <Image
         src={getAvatarUrl(account?.avatar.tmdb.avatar_path)}
         boxSize="150px"
         borderRadius="full"

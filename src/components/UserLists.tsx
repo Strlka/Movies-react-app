@@ -1,4 +1,4 @@
-import { Grid, GridItem, IconButton, useBreakpointValue, Heading, Box } from '@chakra-ui/react';
+import { Grid, GridItem, IconButton, useBreakpointValue, Box, Icon } from '@chakra-ui/react';
 import useAccount from '../hooks/useAccount'
 import { useEffect, useRef, useState } from 'react';
 import { FaAnglesUp } from 'react-icons/fa6';
@@ -22,31 +22,32 @@ const UserLists = () => {
   const [showRatedmovies, setShowRatedMovies] = useState(false);
 
 
-    const [isShowScrollToTop, setShowScrollToTop] = useState(false);
+  const [isShowScrollToTop, setShowScrollToTop] = useState(false);
   
-    const mainRef = useRef<HTMLDivElement>(null);
-    const scrollToTop = () => {
-      if (mainRef.current) {
-        mainRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+  const mainRef = useRef<HTMLDivElement>(null);
+  const scrollToTop = () => {
+    if (mainRef.current) {
+      mainRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+  useEffect(() => {
+    const element = mainRef.current;
+    if (!element) return;
+    
+    const handleScroll = () => {
+      const showAt = window.innerHeight * 2;
+      setShowScrollToTop(element.scrollTop > showAt);
+
     };
-    useEffect(() => {
-      const element = mainRef.current;
-      if (!element) return;
-      
-      const handleScroll = () => {
-        const showAt = window.innerHeight * 2;
-        setShowScrollToTop(element.scrollTop > showAt);
-  
-      };
-  
-      element.addEventListener("scroll", handleScroll);
-      return () => element.removeEventListener("scroll", handleScroll);
-    }, []);
+
+    element.addEventListener("scroll", handleScroll);
+    return () => element.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  if (!account) return null;
 
 
   return (
-    account && 
     <>
         <Grid height="100vh"
           templateAreas={{
@@ -91,7 +92,7 @@ const UserLists = () => {
             opacity={isShowScrollToTop ? 1 : 0}
             aria-label="Scroll to top"
             >
-            <FaAnglesUp />
+            <Icon as={FaAnglesUp} />
           </IconButton>}
         </Grid>
       </>

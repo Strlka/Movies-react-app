@@ -1,8 +1,8 @@
-import { Button, Icon, Menu, Portal, Text, Image } from '@chakra-ui/react'
+import { Button, Icon, Menu, Portal, Image } from '@chakra-ui/react'
 import { VscAccount } from 'react-icons/vsc';
 import { useNavigate } from 'react-router-dom';
 import { useColorModeValue } from './ui/color-mode';
-import apiClient, { apiReadAccessToken } from '../services/api-client';
+import { apiReadAccessToken } from '../services/api-client';
 import { getAvatarUrl } from '../services/image-url';
 import useAccount from '../hooks/useAccount';
 
@@ -62,7 +62,7 @@ const AccountButton = () => {
               borderRadius="full"
               fit="cover"
               alt={account.username}
-            /> : <VscAccount />}
+            /> : <Icon as={VscAccount} />}
         Account
       </Button>
     </MenuTrigger>

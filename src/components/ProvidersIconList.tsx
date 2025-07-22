@@ -9,7 +9,9 @@ interface Props {
 
 const ProvidersIconList = ({movie_id}: Props) => {
 
-const {data} = useProviders(movie_id);
+  const {data} = useProviders(movie_id);
+
+  if (!data) return null;
 
 
 

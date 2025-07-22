@@ -14,11 +14,17 @@ export const toaster = createToaster({
   pauseOnPageIdle: true,
 })
 
+const ChakraToasterWithProps = (props: any) => {
+  return <ChakraToaster {...props} />
+}
+
+
+
 export const Toaster = () => {
   return (
     <Portal>
-      <ChakraToaster toaster={toaster} insetInline={{ mdDown: "4" }}>
-        {(toast) => (
+      <ChakraToasterWithProps toaster={toaster} insetInline={{ mdDown: "4" }}>
+        {(toast: any) => (
           <Toast.Root width={{ md: "sm" }}>
             {toast.type === "loading" ? (
               <Spinner size="sm" color="blue.solid" />
@@ -37,7 +43,7 @@ export const Toaster = () => {
             {toast.meta?.closable && <Toast.CloseTrigger />}
           </Toast.Root>
         )}
-      </ChakraToaster>
+      </ChakraToasterWithProps>
     </Portal>
   )
 }

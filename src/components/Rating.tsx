@@ -3,7 +3,7 @@ import apiClient, { apiReadAccessToken } from '../services/api-client';
 import { Text, HStack, Icon, RatingGroup, SkeletonCircle } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import useAccount from '../hooks/useAccount';
-import { RiStarOffFill } from "react-icons/ri";
+import { TbStarOff } from "react-icons/tb";
 
 
 interface Props {
@@ -59,7 +59,7 @@ const Rating = ({movieId}: Props) => {
   return (
     rating ? 
     <HStack gap={2}>
-      <Icon as={RiStarOffFill} 
+      <Icon as={TbStarOff } 
         _hover={{ color: 'white'}}
         aria-label="Remove from favorites" 
         size='xl'

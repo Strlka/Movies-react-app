@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem, HStack, IconButton, useBreakpointValue } from "@chakra-ui/react"
+import { Box, Grid, GridItem, HStack, Icon, IconButton, useBreakpointValue } from "@chakra-ui/react"
 import MovieGrid from "../components/MovieGrid";
 import GenreList from "../components/GenreList";
 import { useEffect, useRef, useState } from "react";
@@ -80,7 +80,7 @@ const HomePage = () => {
             opacity={isShowScrollToTop ? 1 : 0}
             aria-label="Scroll to top"
             >
-            <FaAnglesUp />
+            <Icon as={FaAnglesUp} />
           </IconButton>}
         </Grid>
       </>

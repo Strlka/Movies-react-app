@@ -1,5 +1,5 @@
 import useMovieQueryStore from '../store';
-import { Input, InputGroup } from '@chakra-ui/react'
+import { Icon, Input, InputGroup } from '@chakra-ui/react'
 import { useRef } from 'react'
 import { BsSearch } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom';
@@ -21,7 +21,7 @@ const SearchInput = () => {
             ref.current.value = '';
         }
     }}>
-        <InputGroup startElement={<BsSearch />}>
+        <InputGroup startElement={<Icon as={BsSearch} />}>
             <Input ref={ref} borderRadius={20} placeholder='Search movies...' variant='subtle'/>
         </InputGroup>
     </form>

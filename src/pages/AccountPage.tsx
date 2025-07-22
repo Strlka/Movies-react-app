@@ -16,6 +16,8 @@ const AccountPage = () => {
 
     const { data: account } = useAccount(sessionID || '');
 
+    if (!account) return null;
+
     const {movies: ratedMovies, isLoading: isRatedLoading} = useAllRatedMovies(undefined, account?.id, sessionID || '');
     const {movies, isLoading} = useAllFavoriteMovies(undefined, account?.id, sessionID || '');
 
@@ -23,7 +25,6 @@ const AccountPage = () => {
 
     
   return (
-    account && 
     <Stack padding='10px'>
         <HStack 
             justifyContent='flex-start'

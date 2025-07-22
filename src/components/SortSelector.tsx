@@ -1,4 +1,4 @@
-import { Button, Menu, Portal } from '@chakra-ui/react'
+import { Button, Icon, Menu, Portal } from '@chakra-ui/react'
 import { BsChevronDown } from 'react-icons/bs'
 import { useColorModeValue } from './ui/color-mode';
 import useMovieQueryStore from '../store';
@@ -77,7 +77,7 @@ const SortSelector = () => {
           _focusVisible={{ boxShadow: undefined, outline: undefined }} 
           >
           {selector?.name || 'Sort by'}
-          <BsChevronDown />
+          <Icon as={BsChevronDown} />
         </Button>
       </MenuTrigger>
       <Portal>

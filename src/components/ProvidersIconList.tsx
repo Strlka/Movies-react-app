@@ -1,4 +1,4 @@
-import { HStack, Image, Stack, Wrap } from "@chakra-ui/react";
+import { Image, Stack, Wrap } from "@chakra-ui/react";
 import useProviders from "../hooks/useProviders";
 import { getProviderImageUrl } from "../services/image-url";
 import { Tooltip } from "./ui/tooltip";
@@ -11,12 +11,10 @@ const ProvidersIconList = ({movie_id}: Props) => {
 
   const {data} = useProviders(movie_id);
 
-  if (!data) return null;
-
+  if (!data || data?.length === 0) return null;
 
 
   return ( 
-    data?.length !== 0 &&
     <Stack marginBottom='12px' fontWeight='bold' color='white' fontSize='2xl'>
       Where to watch
     <Wrap gap='2'>

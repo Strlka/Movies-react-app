@@ -96,7 +96,7 @@ const fetchAllFavoriteMovies = async (accountId: number, sessionId: string) => {
     return movies;
   };
   
-  const useAllFavoriteMovies = (movieID: number, accountId?: number, sessionId?: string) => {
+  const useAllFavoriteMovies = (movieID?: number, accountId?: number, sessionId?: string) => {
     const { data: movies = [], ...query } = useQuery({
       queryKey: ['allFavoriteMovies', accountId, sessionId],
       queryFn: () => {

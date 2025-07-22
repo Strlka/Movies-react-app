@@ -3,8 +3,8 @@ import Layout from "./pages/Layout";
 import HomePage from "./pages/HomePage";
 import MoviePage from "./pages/MoviePage";
 import ErrorPage from "./pages/ErrorPage";
-import Lk from "./components/Account";
-import Account from "./components/Account";
+import UserLists from "./components/UserLists";
+import AccountPage from "./pages/AccountPage";
 
 const router = createBrowserRouter([
     {
@@ -14,7 +14,8 @@ const router = createBrowserRouter([
         children: [
             {index: true, element: <HomePage />},
             {path: 'movies/:slug', element: <MoviePage />},
-            {path: 'account', element: <Account />}
+            {path: 'account', element: <AccountPage />},
+            {path: 'movieslists', element: <UserLists />}
         ]
 
     }

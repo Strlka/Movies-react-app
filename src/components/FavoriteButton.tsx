@@ -1,6 +1,6 @@
 import apiClient from '../services/api-client';
 import useAccount from '../hooks/useAccount';
-import { Icon } from '@chakra-ui/react'
+import { Icon, SkeletonCircle } from '@chakra-ui/react'
 import { IoHeart } from "react-icons/io5";
 import { IoHeartDislike } from "react-icons/io5";
 import { useQueryClient } from '@tanstack/react-query'
@@ -24,7 +24,7 @@ const FavoriteButton = ({movieId}: Props) => {
 
     const {isFavorite, isLoading: isLoadingFavoriteMovies} = useAllFavoriteMovies(movieId, account?.id, sessionID || '');
 
-    if (isLoadingFavoriteMovies) return null;
+    if (isLoadingFavoriteMovies || isLoading) return <SkeletonCircle size="32px" />;
 
 
     const handleClick = async() => {

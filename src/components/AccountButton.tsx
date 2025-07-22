@@ -1,8 +1,10 @@
-import { Button, Menu, Portal, Text } from '@chakra-ui/react'
+import { Button, Icon, Menu, Portal, Text, Image } from '@chakra-ui/react'
 import { VscAccount } from 'react-icons/vsc';
 import { useNavigate } from 'react-router-dom';
 import { useColorModeValue } from './ui/color-mode';
 import apiClient, { apiReadAccessToken } from '../services/api-client';
+import { getAvatarUrl } from '../services/image-url';
+import useAccount from '../hooks/useAccount';
 
 
 const MenuTrigger = (props: any) => {
@@ -16,6 +18,8 @@ const MenuItem = (props: any) => {
 const AccountButton = () => {
 
     const sessionID = localStorage.getItem('session_id');
+
+    const { data: account } = useAccount(sessionID || '');
 
     const navigate = useNavigate();
 
@@ -51,7 +55,14 @@ const AccountButton = () => {
         _hover={{color: 'teal.400' }}
         _focus={{ boxShadow: 'none', outline: 'none' }}
         _focusVisible={{ boxShadow: undefined, outline: undefined }} >
-        <VscAccount />
+        {account?.avatar.tmdb.avatar_path ? 
+            <Image
+              src={getAvatarUrl(account?.avatar.tmdb.avatar_path)}
+              boxSize="20px"
+              borderRadius="full"
+              fit="cover"
+              alt={account.username}
+            /> : <VscAccount />}
         Account
       </Button>
     </MenuTrigger>
@@ -60,6 +71,9 @@ const AccountButton = () => {
         <Menu.Content >
           <MenuItem key='account' onClick={() => navigate('/account')} cursor='pointer' _hover={{ bg: hoverBgColor, color: hoverColor }}>
               Account
+          </MenuItem>
+          <MenuItem key='lists' onClick={() => navigate('/movieslists')} cursor='pointer' _hover={{ bg: hoverBgColor, color: hoverColor }}>
+              Movies lists
           </MenuItem>
           <MenuItem key='logout' onClick={handleClick} cursor='pointer' _hover={{ bg: hoverBgColor, color: hoverColor }}>
               Logout

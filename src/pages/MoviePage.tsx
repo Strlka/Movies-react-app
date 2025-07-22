@@ -9,6 +9,7 @@ import MovieImages from "../components/MovieImages";
 import ShareButtons from "../components/ShareButtons";
 import AddFavoriteButton from "../components/FavoriteButton";
 import Rating from "../components/Rating";
+import { DarkMode } from "../components/ui/color-mode";
 
 
 
@@ -64,7 +65,9 @@ const MoviePage = () => {
           >
             <HStack justifyContent='space-between'>
               <Heading fontSize='4xl'>{movie.title}</Heading>
-              <VoteAverage vote_average={movie.vote_average} />
+              <DarkMode>
+                <VoteAverage vote_average={movie.vote_average} />
+              </DarkMode>
             </HStack>
             <Text marginY={5} fontStyle='italic'>{movie.tagline}</Text>
             <Text marginY={5} fontWeight='bold'>{genresList}</Text>

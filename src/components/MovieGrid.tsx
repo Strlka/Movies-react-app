@@ -55,16 +55,6 @@ const MovieGrid = ({ onTotalResultsChange }: Props) => {
     onTotalResultsChange(foundResults?.pages[0].total_results ?? '');
   }, [foundResults]);
 
-
-
-  // const slug = (movie: Movie) => {
-  //   return movie.id + '_' + movie.title
-  //     .trim()
-  //     .toLowerCase()
-  //     .replace(/\s+/g, '-')
-  //     .replace(/[^\w-]/g, '') 
-  // }
-
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   if (error) return <Text>{error.message}</Text>;
@@ -78,7 +68,7 @@ const MovieGrid = ({ onTotalResultsChange }: Props) => {
         loader={<Spinner size="lg" color="teal.400" marginLeft='45%'/>}
       >
       <SimpleGrid columns={{sm: 2, md: 3, lg: 4, xl: 5}} padding='10px' gap={5}>
-        {!isLoading && ((movies.length === 0 && !isLoading) || (foundMovies?.length === 0 && isSearching && !isSearchLoading)) && <Text gap={10}>Movies not foud</Text>}
+        {!isLoading && ((movies.length === 0 && !isLoading) || (foundMovies?.length === 0 && isSearching && !isSearchLoading)) && <Text>Movies not foud</Text>}
         {(isSearching ? foundMovies : movies).map((movie) => (
           <MovieCardContainer key={isSearching ? `found_${movie.id}` : `movie_${movie.id}`}>
             <MovieCard movie={movie} genres={genres || []} onClick={() => navigate(`movies/${movie.id}`)} />

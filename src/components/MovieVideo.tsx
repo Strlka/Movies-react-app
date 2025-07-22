@@ -1,4 +1,4 @@
-import { AspectRatio, Box, Spinner } from '@chakra-ui/react';
+import { AspectRatio, Box, Skeleton, Spinner } from '@chakra-ui/react';
 import useVideos from '../hooks/useVideos';
 
 interface Props {
@@ -10,7 +10,12 @@ const MovieVideo = ({movieId}: Props) => {
 
     const {data, isLoading, error} = useVideos(movieId);
 
-    if (isLoading) return <Box padding='10px'><Spinner size='xl' color='teal.400'/></Box>;
+    if (isLoading) return (
+      <AspectRatio ratio={16/9} style={{borderRadius:'10px', overflow: 'hidden'}}>
+        <Skeleton />
+      </AspectRatio>
+    );
+
     if (!data || data.length === 0 || error) return null;
 
     console.log(data);

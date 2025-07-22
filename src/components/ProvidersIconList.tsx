@@ -16,13 +16,13 @@ const {data} = useProviders(movie_id);
   return ( 
     data?.length !== 0 &&
     <Stack marginBottom='12px' fontWeight='bold' color='white' fontSize='2xl'>
-      Where to watch: 
+      Where to watch
     <Wrap gap='2'>
       {data?.map((provider) => {
           return <Tooltip content={provider.provider_name} key={provider.provider_id}>
                   <Image 
                   src={getProviderImageUrl(provider.logo_path)} 
-                  boxSize='50px'
+                  boxSize='32px'
                   borderRadius='5px'
                   fit='cover'
                   alt={provider.provider_name}

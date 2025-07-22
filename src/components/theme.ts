@@ -12,18 +12,6 @@ const config = defineConfig({
           }
         }
       },
-    //   semanticTokens: {
-    //     colors: {
-    //       bg: {
-    //         DEFAULT: {
-    //           value: {
-    //             _light: "{colors.brandBlue.400}",
-    //             _dark: "{colors.brandBlue.200}",
-    //           },
-    //         }
-    //     },
-    //     }
-    //   },
       recipes: {
         button: {}
       }

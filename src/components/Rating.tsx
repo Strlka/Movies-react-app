@@ -1,8 +1,7 @@
 import useAllRatedMovies from '../hooks/useAllRatedMovies';
 import apiClient, { apiReadAccessToken } from '../services/api-client';
-import { Text, HStack, Icon, RatingGroup } from '@chakra-ui/react';
+import { Text, HStack, Icon, RatingGroup, SkeletonCircle } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react'
 import useAccount from '../hooks/useAccount';
 import { RiStarOffFill } from "react-icons/ri";
 
@@ -20,17 +19,13 @@ interface FetchAddRatingResponse {
 
 const Rating = ({movieId}: Props) => {
 
-    const [value, setValue] = useState(3);
-
     const queryClient = useQueryClient();
     const sessionID = localStorage.getItem('session_id'); 
-    const { data: account } = useAccount(sessionID || '');
+    const { data: account, isLoading: isAccountLoading } = useAccount(sessionID || '');
 
     const {rating, isLoading} = useAllRatedMovies(movieId, account?.id, sessionID || '');
 
     const handleValueChange = async(e: { value: number }) => {
-        
-        setValue(e.value);
 
         await apiClient
         .post<FetchAddRatingResponse>(`/3/movie/${movieId}/rating`,
@@ -58,7 +53,7 @@ const Rating = ({movieId}: Props) => {
       
   };
 
-    if (isLoading) return null;
+  if (isLoading || isAccountLoading) return <SkeletonCircle size="32px" />;
 
 
   return (
@@ -76,7 +71,7 @@ const Rating = ({movieId}: Props) => {
     </HStack> :
     <RatingGroup.Root
       count={5}
-      value={value}
+      value={3}
       onValueChange={handleValueChange}
       size="lg"
       colorPalette='yellow'

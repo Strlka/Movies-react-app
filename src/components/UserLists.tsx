@@ -3,18 +3,21 @@ import useAccount from '../hooks/useAccount'
 import { useEffect, useRef, useState } from 'react';
 import { FaAnglesUp } from 'react-icons/fa6';
 import FavoriteMoviesGrid from './FavoriteMoviesGrid';
-import AccountMenu from './AccountMenu';
+import { Navigate } from 'react-router-dom';
+import AsideMoviesLists from './AsideMoviesLists';
+import UserListsHeading from './UserListsHeading';
 
 
-const Account = () => {
+const UserLists = () => {
 
   const sessionID = localStorage.getItem('session_id');  
+
+  if (!sessionID) return <Navigate to='/' />;
 
   const {data: account, isLoading, error} = useAccount(sessionID || '');
 
   const showAside = useBreakpointValue({ base: false, lg: true });
   const showOntop = useBreakpointValue({ base: true, lg: false });
-  const showHeading = useBreakpointValue({ base: false, lg: true });
 
   const [showRatedmovies, setShowRatedMovies] = useState(false);
 
@@ -41,6 +44,7 @@ const Account = () => {
       return () => element.removeEventListener("scroll", handleScroll);
     }, []);
 
+
   return (
     account && 
     <>
@@ -60,30 +64,17 @@ const Account = () => {
         >
           {showAside && (
             <GridItem area="aside" paddingX="10px">
-              <AccountMenu 
-                username={account.username}
+              <AsideMoviesLists showRatedmovies={showRatedmovies} />
+            </GridItem>
+          )}
+          <GridItem area="main" overflowY="auto" ref={mainRef}>
+            <Box paddingX="10px">
+              <UserListsHeading
                 showRatedmovies={showRatedmovies}
                 setShowRatedMovies={() => setShowRatedMovies(true)} 
                 reSetShowRatedMovies={() => setShowRatedMovies(false)}
               />
-            </GridItem>
-          )}
-          <GridItem area="main" overflowY="auto" ref={mainRef}>
-            {showOntop && <Box paddingX="10px">
-                            <AccountMenu 
-                              username={account.username}
-                              showRatedmovies={showRatedmovies}
-                              setShowRatedMovies={() => setShowRatedMovies(true)} 
-                              reSetShowRatedMovies={() => setShowRatedMovies(false)}
-                            />
-                          </Box>}
-            {showHeading && <Heading as="h1" 
-              marginY={5} 
-              fontSize={{base: '2xl', lg: '3xl'}}
-              paddingLeft={3}
-            >
-              {account.username} {showRatedmovies ? 'rated' : 'favorite'} movies
-            </Heading>}
+            </Box>
             <FavoriteMoviesGrid accountId={account.id} sessionID={sessionID} showRatedmovies={showRatedmovies}/>
           </GridItem>
           {isShowScrollToTop && <IconButton 
@@ -107,4 +98,4 @@ const Account = () => {
   )
 }
 
-export default Account
+export default UserLists

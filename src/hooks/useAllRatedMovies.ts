@@ -1,5 +1,5 @@
 import apiClient from "../services/api-client";
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 
 
 export interface Movie {
@@ -50,7 +50,7 @@ const fetchAllRatedMovies = async (accountId: number, sessionId: string) => {
     return movies;
   };
   
-  const useAllRatedMovies = (movieID: number, accountId?: number, sessionId?: string) => {
+  const useAllRatedMovies = (movieID?: number, accountId?: number, sessionId?: string) => {
     const { data: movies = [], ...query } = useQuery({
       queryKey: ['allRatedMovies', accountId, sessionId],
       queryFn: () => {

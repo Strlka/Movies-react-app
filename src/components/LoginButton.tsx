@@ -25,7 +25,7 @@ const LoginButton = () => {
         .get<FetchRequestToken>('/3/authentication/token/new')
         .then(res => res.data.request_token)
 
-        const authURL = `https://www.themoviedb.org/authenticate/${requestToken}?redirect_to=http://localhost:5173/`;
+        const authURL = `https://www.themoviedb.org/authenticate/${requestToken}?redirect_to=https://movies-react-app-murex.vercel.app/`;
         window.location.href = authURL;
     }
 

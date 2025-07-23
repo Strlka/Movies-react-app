@@ -78,11 +78,15 @@ const MoviePage = () => {
             <Text maxWidth='750px' marginY={5}>{movie.overview}</Text>
             <Text fontWeight='bold'>Budget: {movie.budget ? `$${movie.budget.toLocaleString()}` : 'Unknown'}</Text>
           </Stack>
-          <HStack justifyContent='space-between' padding='10px'>
+          <HStack 
+            justifyContent='space-between'
+            maxWidth={{base: '560px' }}
+            paddingRight='10px'
+          >
             <AddFavoriteButton movieId={movie.id}/>
             <Rating movieId={movie.id}/>
-            {slug && <ShareButtons slug={slug} title={movie.title}/>}
           </HStack>
+          {slug && <ShareButtons slug={slug} title={movie.title}/>}
       </Stack>
       <Stack 
         width={{base: 'auto', md: '560px', lg: '560px', xl: '2/5'}}

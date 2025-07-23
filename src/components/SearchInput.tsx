@@ -22,7 +22,7 @@ const SearchInput = () => {
         }
     }}>
         <InputGroup startElement={<Icon as={BsSearch} />}>
-            <Input ref={ref} borderRadius={20} placeholder='Search movies...' variant='subtle'/>
+            <Input ref={ref} type='search' borderRadius={20} placeholder='Search movies...' variant='subtle' fontSize='16px'/>
         </InputGroup>
     </form>
   )

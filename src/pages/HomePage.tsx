@@ -56,7 +56,13 @@ const HomePage = () => {
               <GenreList />
             </GridItem>
           )}
-          <GridItem area="main" overflowY="auto" ref={mainRef} style={{ scrollbarGutter: 'stable' }}>
+          <GridItem 
+            area="main" 
+            overflowY="auto" 
+            ref={mainRef}
+            id="scrollableMain"
+            style={{ scrollbarGutter: "stable" }}
+          >
             <Box paddingLeft={3}>
               <MovieHeading foudMoviesTotalResults={foudMoviesTotalResults} />
               <HStack gap={5} marginBottom={5}>

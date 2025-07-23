@@ -58,7 +58,7 @@ const HomePage = () => {
           )}
           <GridItem 
             area="main" 
-            overflowY="auto" 
+            overflowY="scroll" 
             ref={mainRef}
             id="scrollableMain"
             style={{ scrollbarGutter: "stable" }}

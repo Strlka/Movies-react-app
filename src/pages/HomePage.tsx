@@ -60,8 +60,6 @@ const HomePage = () => {
             area="main" 
             overflowY="auto" 
             ref={mainRef}
-            // id="scrollableMain"
-            // style={{ scrollbarGutter: "stable" }}
           >
             <Box paddingLeft={3}>
               <MovieHeading foudMoviesTotalResults={foudMoviesTotalResults} />

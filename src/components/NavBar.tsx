@@ -5,9 +5,12 @@ import SearchInput from './SearchInput';
 import LoginButton from './LoginButton';
 import { useNavigate } from 'react-router-dom';
 import AccountButton from './AccountButton';
+import useMovieQueryStore from '../store';
 
 const NavBar = () => {
   const navigate = useNavigate();
+
+  const resetSearching = useMovieQueryStore(s => s.resetSearchText);
 
   const sessionID = localStorage.getItem('session_id'); 
 
@@ -24,7 +27,7 @@ const NavBar = () => {
         <Image
           src={logo}
           boxSize="60px"
-          onClick={() => navigate('/')}
+          onClick={() => {navigate('/'); resetSearching()}}
           cursor="pointer"
         />
         <Box display={{ base: 'none', lg: 'block' }} flex='1'>

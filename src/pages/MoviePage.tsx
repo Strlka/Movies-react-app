@@ -48,13 +48,13 @@ const MoviePage = () => {
     >
       <Stack 
         justifyContent='space-between'
-        direction={{sm: 'column', md: 'column', lg: 'column', xl: 'row'}}
+        direction={{base: 'column', sm: 'column', md: 'column', lg: 'column', xl: 'row'}}
       >
         <Stack
-          width={{sm: 'auto', md: '560px', lg: '560px', xl: '2/5'}}
-          maxWidth={{sm: '560px' }}
+          width={{base: 'auto', md: '560px', lg: '560px', xl: '2/5'}}
+          maxWidth={{base: '560px' }}
           marginTop={14}
-          marginLeft={{sm: '12px', md: '56px', lg: '56px', xl: '56px'}}
+          marginLeft={{base: '12px', md: '56px', lg: '56px', xl: '56px'}}
           gap={10}
         >
           <Stack
@@ -85,11 +85,11 @@ const MoviePage = () => {
           </HStack>
       </Stack>
       <Stack 
-        width={{sm: 'auto', md: '560px', lg: '560px', xl: '2/5'}}
-        maxWidth={{sm: '560px' }}
-        marginTop={{sm: '40px', md: '40px', lg: '40px', xl: '56px'}}
-        marginLeft={{sm: '12px', md: '56px', lg: '56px', xl: '56px'}}
-        marginRight={{sm: '0px', md: '0px', lg: '0px', xl: '40px'}}
+        width={{base: 'auto', md: '560px', lg: '560px', xl: '2/5'}}
+        maxWidth={{base: '560px' }}
+        marginTop={{base: '40px', md: '40px', lg: '40px', xl: '56px'}}
+        marginLeft={{base: '12px', md: '56px', lg: '56px', xl: '56px'}}
+        marginRight={{base: '0px', md: '0px', lg: '0px', xl: '40px'}}
         display="flex" 
         justifyContent='center'
       >

@@ -16,3 +16,7 @@ form {
   outline: none !important;
   box-shadow: none !important;
 }
+
+.infinite-scroll-component {
+    overflow: hidden !important;
+}

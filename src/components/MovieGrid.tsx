@@ -66,7 +66,8 @@ const MovieGrid = ({ onTotalResultsChange }: Props) => {
         hasMore={isSearching ? !!hasSearchingNextPage : !!hasNextPage}
         next={() => isSearching ? fetchSearchingNextPage() : fetchNextPage()}
         loader={<Spinner size="lg" color="teal.400" marginLeft='45%'/>}
-        scrollableTarget="scrollableMain"
+        style={{overflow: 'hidden'}}
+        //scrollableTarget="scrollableMain"
       >
       <SimpleGrid columns={{sm: 2, md: 3, lg: 4, xl: 5}} padding='10px' gap={5}>
         {!isLoading && ((movies.length === 0 && !isLoading) || (foundMovies?.length === 0 && isSearching && !isSearchLoading)) && <Text>Movies not foud</Text>}

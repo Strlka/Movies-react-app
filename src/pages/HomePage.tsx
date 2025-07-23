@@ -58,10 +58,10 @@ const HomePage = () => {
           )}
           <GridItem 
             area="main" 
-            overflowY="scroll" 
+            overflowY="auto" 
             ref={mainRef}
-            id="scrollableMain"
-            style={{ scrollbarGutter: "stable" }}
+            // id="scrollableMain"
+            // style={{ scrollbarGutter: "stable" }}
           >
             <Box paddingLeft={3}>
               <MovieHeading foudMoviesTotalResults={foudMoviesTotalResults} />

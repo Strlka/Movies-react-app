@@ -73,7 +73,7 @@ const Rating = ({movieId}: Props) => {
     </HStack> :
     <RatingGroup.Root
       count={5}
-      value={3}
+      value={0}
       onValueChange={handleValueChange}
       size="lg"
       colorPalette='yellow'

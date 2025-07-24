@@ -63,39 +63,41 @@ const FavoriteButton = ({movieId}: Props) => {
 
   if (!account) return null;
 
-  return (
-
-    !isFavorite  ? 
-      <Tooltip 
-        content='Add to favorites'
-        positioning={{ placement: "right-end" }}
-      >
-        <Icon as={IoHeart}
-          _hover={{ color: 'red.600'}}
-          aria-label="Add to favorites" 
-          size='xl'
-          color='white'
-          cursor='pointer'
-          onClick={handleClick}>
-        </Icon>
-      </Tooltip> :
-      <Tooltip 
-        content='Remove from favorites'
-        positioning={{ placement: "right-end" }}
-      >
-        <Icon as={hovered ? IoHeartDislike : IoHeart} 
+  return !isFavorite ? (
+    <Tooltip
+      content="Add to favorites"
+      positioning={{ placement: "right-end" }}
+    >
+      <Icon
+        as={IoHeart}
+        _hover={{ color: "red.600" }}
+        aria-label="Add to favorites"
+        size="xl"
+        color="white"
+        cursor="pointer"
+        onClick={handleClick}
+      ></Icon>
+    </Tooltip>
+  ) : (
+    <Tooltip
+      content="Remove from favorites"
+      positioning={{ placement: "right-end" }}
+    >
+      <div>
+        <Icon
+          as={hovered ? IoHeartDislike : IoHeart}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
-          _hover={{ color: 'white'}}
-          aria-label="Remove from favorites" 
-          size='xl'
-          color='red.600'
-          cursor='pointer'
-          onClick={handleRemove}>
-        </Icon>
-      </Tooltip>
-
-  )
+          _hover={{ color: "white" }}
+          aria-label="Remove from favorites"
+          size="xl"
+          color="red.600"
+          cursor="pointer"
+          onClick={handleRemove}
+        ></Icon>
+      </div>
+    </Tooltip>
+  );
 }
 
 export default FavoriteButton

@@ -26,6 +26,7 @@ const MoviePage = () => {
  
  
     const genresList = movie.genres.map(genre => genre.name).join(', ');
+   
     let date = new Date(movie.release_date);
 
 
@@ -72,7 +73,11 @@ const MoviePage = () => {
             <Text marginY={5} fontStyle='italic'>{movie.tagline}</Text>
             <Text marginY={5} fontWeight='bold'>{genresList}</Text>
             <HStack justify='flex-start' maxWidth='750px'>
-              <Text fontWeight='bold' marginY={5}>{date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>
+              <Text fontWeight='bold' marginY={5}>
+                {movie.release_date 
+                  ? date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })
+                  : 'Release date: Unknown'}
+              </Text>
               <Text fontWeight='bold' marginLeft={10}>{movie.original_language}</Text>
             </HStack>
             <Text maxWidth='750px' marginY={5}>{movie.overview}</Text>

@@ -23,9 +23,9 @@ interface MovieQueryStore {
 const useMovieQueryStore = create<MovieQueryStore>((set) => ({
     movieQuery: {},
     setSearchText: (searchText) => set(() => ({movieQuery: { searchText }})),
-    setGernreId: (genreId) =>set((store) => ({movieQuery: {...store.movieQuery, genreId}})),
-    setProviderId: (providerId) => set((store) => ({movieQuery: {...store.movieQuery, providerId}})),
-    setSelectorParam: (selectorParam) => set((store) => ({movieQuery: {...store.movieQuery, selectorParam}})),
+    setGernreId: (genreId) =>set((store) => ({movieQuery: {...store.movieQuery, searchText: undefined, genreId}})),
+    setProviderId: (providerId) => set((store) => ({movieQuery: {...store.movieQuery, searchText: undefined, providerId}})),
+    setSelectorParam: (selectorParam) => set((store) => ({movieQuery: {...store.movieQuery, searchText: undefined, selectorParam}})),
     resetSearchText: () => set(() => ({movieQuery: {}})),
     resetProviderId: () => set((store) => ({movieQuery: {...store.movieQuery, providerId: undefined }})),
     resetGenreId: () => set((store) => ({movieQuery: {...store.movieQuery, genreId: undefined }})),

@@ -30,7 +30,7 @@ const MovieHeading = ({foudMoviesTotalResults}: Props) => {
 
 
   return (
-    <Heading as="h1" marginY={5} fontSize={{base: '2xl', lg: '3xl'}}>
+    <Heading as="h1" marginY={5} fontSize='2xl'>
       {isSearching ? (
         <HStack gap={5} justifyContent='space-between' width='100%' paddingRight='10px'>
             <HStack>

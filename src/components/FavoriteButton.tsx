@@ -5,6 +5,8 @@ import { IoHeart } from "react-icons/io5";
 import { IoHeartDislike } from "react-icons/io5";
 import { useQueryClient } from '@tanstack/react-query'
 import useAllFavoriteMovies from '../hooks/useAllFavoriteMovies';
+import { Tooltip } from './ui/tooltip';
+import { useState } from 'react';
 
 interface Props {
     movieId: number;
@@ -23,6 +25,8 @@ const FavoriteButton = ({movieId}: Props) => {
     const {data: account, isLoading, error} = useAccount(sessionID || '');
 
     const {isFavorite, isLoading: isLoadingFavoriteMovies} = useAllFavoriteMovies(movieId, account?.id, sessionID || '');
+
+    const [hovered, setHovered] = useState(false);
 
     if (isLoadingFavoriteMovies || isLoading) return <SkeletonCircle size="32px" />;
 
@@ -57,25 +61,39 @@ const FavoriteButton = ({movieId}: Props) => {
       queryClient.invalidateQueries({ queryKey: ['allFavoriteMovies', account?.id, sessionID] });
   }
 
+  if (!account) return null;
+
   return (
 
     !isFavorite  ? 
-      <Icon as={IoHeart}
-        _hover={{ color: 'red.600'}}
-        aria-label="Add to Favorites" 
-        size='xl'
-        color='white'
-        cursor='pointer'
-        onClick={handleClick}>
-      </Icon> :
-      <Icon as={IoHeartDislike} 
-        _hover={{ color: 'white'}}
-        aria-label="Remove from favorites" 
-        size='xl'
-        color='red.600'
-        cursor='pointer'
-        onClick={handleRemove}>
-      </Icon>
+      <Tooltip 
+        content='Add to favorites'
+        positioning={{ placement: "right-end" }}
+      >
+        <Icon as={IoHeart}
+          _hover={{ color: 'red.600'}}
+          aria-label="Add to favorites" 
+          size='xl'
+          color='white'
+          cursor='pointer'
+          onClick={handleClick}>
+        </Icon>
+      </Tooltip> :
+      <Tooltip 
+        content='Remove from favorites'
+        positioning={{ placement: "right-end" }}
+      >
+        <Icon as={hovered ? IoHeartDislike : IoHeart} 
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+          _hover={{ color: 'white'}}
+          aria-label="Remove from favorites" 
+          size='xl'
+          color='red.600'
+          cursor='pointer'
+          onClick={handleRemove}>
+        </Icon>
+      </Tooltip>
 
   )
 }

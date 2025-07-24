@@ -17,7 +17,6 @@ const UserLists = () => {
   const {data: account, isLoading, error} = useAccount(sessionID || '');
 
   const showAside = useBreakpointValue({ base: false, lg: true });
-  const showOntop = useBreakpointValue({ base: true, lg: false });
 
   const [showRatedmovies, setShowRatedMovies] = useState(false);
 

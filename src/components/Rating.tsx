@@ -55,6 +55,8 @@ const Rating = ({movieId}: Props) => {
 
   if (isLoading || isAccountLoading) return <SkeletonCircle size="32px" />;
 
+  if (!account) return null;
+
 
   return (
     rating ? 

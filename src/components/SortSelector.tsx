@@ -70,7 +70,8 @@ const SortSelector = () => {
     <Menu.Root>
       <MenuTrigger asChild>
         <Button 
-          variant='subtle' size="lg" 
+          variant='subtle' 
+          size={{base: 'sm', lg: 'lg'}} 
           borderRadius='5px'
           _hover={{color: 'teal.400' }}
           _focus={{ boxShadow: 'none', outline: 'none' }}

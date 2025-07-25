@@ -6,10 +6,12 @@ import ProviderSelector from "../components/ProviderSelector";
 import SortSelector from "../components/SortSelector";
 import MovieHeading from "../components/MovieHeading";
 import { FaAnglesUp } from "react-icons/fa6";
+import GenreSelector from "../components/GerreSelector";
 
 const HomePage = () => {
     
     const showAside = useBreakpointValue({ base: false, lg: true });
+    const showGenreSelector = useBreakpointValue({ base: true, lg: false });
 
     const [foudMoviesTotalResults,  setFoudMoviesTotalResults] = useState<number | ''>('');
     const [isShowScrollToTop, setShowScrollToTop] = useState(false);
@@ -63,7 +65,8 @@ const HomePage = () => {
           >
             <Box paddingLeft={3}>
               <MovieHeading foudMoviesTotalResults={foudMoviesTotalResults} />
-              <HStack gap={5} marginBottom={5}>
+              <HStack gap={5} marginBottom={5} flexWrap='wrap'>
+                {showGenreSelector && <GenreSelector />}
                 <ProviderSelector />
                 <SortSelector />
               </HStack>

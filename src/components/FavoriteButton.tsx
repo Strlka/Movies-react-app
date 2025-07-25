@@ -67,6 +67,9 @@ const FavoriteButton = ({movieId}: Props) => {
     <Tooltip
       content="Add to favorites"
       positioning={{ placement: "right-end" }}
+      trigger="hover focus"
+      openDelay={500}
+      closeDelay={100}
     >
       <Icon
         as={IoHeart}

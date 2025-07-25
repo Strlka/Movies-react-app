@@ -19,15 +19,21 @@ const ProvidersIconList = ({movie_id}: Props) => {
       Where to watch
     <Wrap gap='2'>
       {data?.map((provider) => {
-          return <Tooltip content={provider.provider_name} key={provider.provider_id}>
-                  <Image 
-                  src={getProviderImageUrl(provider.logo_path)} 
-                  boxSize='32px'
-                  borderRadius='5px'
-                  fit='cover'
-                  alt={provider.provider_name}
-                  />
-                </Tooltip>
+          return <Tooltip 
+                    content={provider.provider_name} 
+                    key={provider.provider_id}
+                    trigger="hover focus"
+                    openDelay={500}
+                    closeDelay={100}
+                  >
+                    <Image 
+                    src={getProviderImageUrl(provider.logo_path)} 
+                    boxSize='32px'
+                    borderRadius='5px'
+                    fit='cover'
+                    alt={provider.provider_name}
+                    />
+                  </Tooltip>
       })}
     </Wrap>
     </Stack>

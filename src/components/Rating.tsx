@@ -76,6 +76,9 @@ const Rating = ({movieId}: Props) => {
     <Tooltip
       content="Click to unrate"
       positioning={{ placement: "left-end" }}
+      trigger="hover focus"
+      openDelay={500}
+      closeDelay={100}
     >
       <HStack gap={2}>
         <Icon as={TbStarOff } 
@@ -103,6 +106,9 @@ const Rating = ({movieId}: Props) => {
           <Tooltip
             content="Click to rate"
             positioning={{ placement: "left-end" }}
+            trigger="hover focus"
+            openDelay={500}
+            closeDelay={100}
           >
             <RatingGroup.Control />
           </Tooltip>

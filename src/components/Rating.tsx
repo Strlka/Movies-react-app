@@ -1,9 +1,12 @@
 import useAllRatedMovies from '../hooks/useAllRatedMovies';
 import apiClient, { apiReadAccessToken } from '../services/api-client';
-import { Text, HStack, Icon, RatingGroup, SkeletonCircle } from '@chakra-ui/react';
+import { Text, HStack, Icon, RatingGroup, SkeletonCircle, Box } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import useAccount from '../hooks/useAccount';
 import { TbStarOff } from "react-icons/tb";
+import { useEffect, useState } from 'react';
+import { LightMode } from './ui/color-mode';
+import { Tooltip } from './ui/tooltip';
 
 
 interface Props {
@@ -25,7 +28,15 @@ const Rating = ({movieId}: Props) => {
 
     const {rating, isLoading} = useAllRatedMovies(movieId, account?.id, sessionID || '');
 
+    const [value, setValue] = useState<number | null>(null);
+
+    useEffect(() => {
+      setValue(rating ? (rating / 2) : null);
+    }, [rating]);
+
     const handleValueChange = async(e: { value: number }) => {
+        
+        setValue(e.value);
 
         await apiClient
         .post<FetchAddRatingResponse>(`/3/movie/${movieId}/rating`,
@@ -38,6 +49,8 @@ const Rating = ({movieId}: Props) => {
     }
 
     const handleRemove = async () => {
+
+      setValue(null);
 
       await fetch(`https://api.themoviedb.org/3/movie/${movieId}/rating?session_id=${sessionID}`, {
         method: 'DELETE',
@@ -59,30 +72,42 @@ const Rating = ({movieId}: Props) => {
 
 
   return (
-    rating ? 
-    <HStack gap={2}>
-      <Icon as={TbStarOff } 
-        _hover={{ color: 'white'}}
-        aria-label="Remove from favorites" 
-        size='xl'
-        color='yellow.300'
-        cursor='pointer'
-        onClick={handleRemove}>
-      </Icon>
-      <Text textStyle='xl' color='white'>{rating*10}%</Text>
-    </HStack> :
-    <RatingGroup.Root
-      count={5}
-      value={0}
-      onValueChange={handleValueChange}
-      size="lg"
-      colorPalette='yellow'
-      gap={20}
-      cursor='pointer'
+    value ? 
+    <Tooltip
+      content="Click to unrate"
+      positioning={{ placement: "left-end" }}
     >
-      <RatingGroup.HiddenInput />
-      <RatingGroup.Control />
-    </RatingGroup.Root>
+      <HStack gap={2}>
+        <Icon as={TbStarOff } 
+          _hover={{ color: 'white'}}
+          aria-label="Remove from favorites" 
+          size='xl'
+          color='yellow.300'
+          cursor='pointer'
+          onClick={handleRemove}>
+        </Icon>
+        <Text textStyle='xl' color='white'>{value*20}%</Text>
+      </HStack>
+    </Tooltip> :
+    <LightMode>
+      <RatingGroup.Root
+        count={5}
+        value={value}
+        onValueChange={handleValueChange}
+        size="lg"
+        colorPalette='yellow'
+        gap={20}
+        cursor='pointer'
+      >
+        <RatingGroup.HiddenInput />
+          <Tooltip
+            content="Click to rate"
+            positioning={{ placement: "left-end" }}
+          >
+            <RatingGroup.Control />
+          </Tooltip>
+      </RatingGroup.Root>
+    </LightMode>
   )
 }
 

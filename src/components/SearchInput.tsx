@@ -19,6 +19,7 @@ const SearchInput = () => {
             setSearchText(ref.current.value);
             navigate('/');
             ref.current.value = '';
+            ref.current.blur();
         }
     }}>
         <InputGroup startElement={<Icon as={BsSearch} />}>

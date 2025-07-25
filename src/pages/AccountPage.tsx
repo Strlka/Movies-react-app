@@ -33,7 +33,7 @@ const AccountPage = () => {
         >
             <Avatar sessionID={sessionID}/>
             <Box>
-                <Heading as="h1" marginBottom={5} fontSize={{base: '2xl', lg: '3xl'}}>{account.username}</Heading>
+                <Heading as="h1" marginBottom={5} fontSize={{base: 'lg', md: 'xl', lg: '2xl'}}>{account.username}</Heading>
                 <Text>Name: {account.username}</Text>
                 <Text>Favorite movies: {isLoading ? <Spinner size='xs'/> : movies.length}</Text>
                 <Text>Rated movies: {isRatedLoading ? <Spinner size='xs'/> : ratedMovies.length}</Text>

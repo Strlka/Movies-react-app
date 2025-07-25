@@ -16,7 +16,7 @@ const UserAvatar = ({sessionID}: Props) => {
   return (
     <Image
         src={getAvatarUrl(account?.avatar.tmdb.avatar_path)}
-        boxSize="150px"
+        boxSize='140px'
         borderRadius="full"
         fit="cover"
         alt={account.username}

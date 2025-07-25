@@ -50,7 +50,13 @@ const GenreSelector = () => {
         <Menu.Positioner >
           <Menu.Content >
             {data.map((genre) => (
-              <MenuItem key={genre.name} onClick={() => setGernreId(genre.id)} cursor='pointer' _hover={{ bg: hoverBgColor, color: hoverColor }}>
+              <MenuItem 
+                key={genre.name} 
+                onClick={() => setGernreId(genre.id)} 
+                cursor='pointer' 
+                _hover={{ bg: hoverBgColor, color: hoverColor }}
+                _active={{ bg: hoverBgColor, color: hoverColor }}
+              >
                 {genre.name}
               </MenuItem>
             ))}

@@ -47,6 +47,7 @@ const FavoriteButton = ({movieId}: Props) => {
     }
 
     const handleRemove = async() => {
+      setHovered(false);
       await apiClient
       .post<FetchAddFavoriteResponse>(`/3/account/${account?.id}/favorite`,
           {
@@ -85,6 +86,9 @@ const FavoriteButton = ({movieId}: Props) => {
     <Tooltip
       content="Remove from favorites"
       positioning={{ placement: "right-end" }}
+      trigger="hover focus"
+      openDelay={500}
+      closeDelay={100}
     >
       <div>
         <Icon

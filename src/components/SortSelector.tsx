@@ -85,7 +85,13 @@ const SortSelector = () => {
         <Menu.Positioner >
           <Menu.Content>
             {selectors.map((selector) => (
-              <MenuItem key={selector.id} onClick={() => setSelectorParam(selector.param)} cursor='pointer' _hover={{ bg: hoverBgColor, color: hoverColor }}>
+              <MenuItem 
+                key={selector.id} 
+                onClick={() => setSelectorParam(selector.param)} 
+                cursor='pointer' 
+                _hover={{ bg: hoverBgColor, color: hoverColor }}
+                _active={{ bg: hoverBgColor, color: hoverColor }}
+              >
                 {selector.name}
               </MenuItem>
             ))}

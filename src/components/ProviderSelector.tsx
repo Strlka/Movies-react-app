@@ -77,7 +77,13 @@ const ProviderSelector = () => {
         <Menu.Positioner >
           <Menu.Content >
             {providersTopList.map((p) => (
-              <MenuItem key={p!.provider_name} onClick={() => setProviderId(p!.provider_id)} cursor='pointer' _hover={{ bg: hoverBgColor, color: hoverColor }}>
+              <MenuItem 
+                key={p!.provider_name} 
+                onClick={() => setProviderId(p!.provider_id)} 
+                cursor='pointer' 
+                _hover={{ bg: hoverBgColor, color: hoverColor }}
+                _active={{ bg: hoverBgColor, color: hoverColor }}
+              >
                 {p?.provider_name}
               </MenuItem>
             ))}

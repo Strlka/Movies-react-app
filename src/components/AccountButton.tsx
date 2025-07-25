@@ -69,13 +69,31 @@ const AccountButton = () => {
     <Portal>
       <Menu.Positioner >
         <Menu.Content >
-          <MenuItem key='account' onClick={() => navigate('/account')} cursor='pointer' _hover={{ bg: hoverBgColor, color: hoverColor }}>
+          <MenuItem 
+            key='account' 
+            onClick={() => navigate('/account')} 
+            cursor='pointer' 
+            _hover={{ bg: hoverBgColor, color: hoverColor }} 
+            _active={{ bg: hoverBgColor, color: hoverColor }}
+          >
               Account
           </MenuItem>
-          <MenuItem key='lists' onClick={() => navigate('/movieslists')} cursor='pointer' _hover={{ bg: hoverBgColor, color: hoverColor }}>
+          <MenuItem 
+            key='lists' 
+            onClick={() => navigate('/movieslists')} 
+            cursor='pointer' 
+            _hover={{ bg: hoverBgColor, color: hoverColor }}
+            _active={{ bg: hoverBgColor, color: hoverColor }}
+          >
               Movies lists
           </MenuItem>
-          <MenuItem key='logout' onClick={handleClick} cursor='pointer' _hover={{ bg: hoverBgColor, color: hoverColor }}>
+          <MenuItem 
+            key='logout' 
+            onClick={handleClick} 
+            cursor='pointer' 
+            _hover={{ bg: hoverBgColor, color: hoverColor }}
+            _active={{ bg: hoverBgColor, color: hoverColor }}
+          >
               Logout
           </MenuItem>
         </Menu.Content>

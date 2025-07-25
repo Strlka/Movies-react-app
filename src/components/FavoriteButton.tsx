@@ -26,8 +26,6 @@ const FavoriteButton = ({movieId}: Props) => {
 
     const {isFavorite, isLoading: isLoadingFavoriteMovies} = useAllFavoriteMovies(movieId, account?.id, sessionID || '');
 
-    const [hovered, setHovered] = useState(false);
-
     if (isLoadingFavoriteMovies || isLoading) return <SkeletonCircle size="32px" />;
 
 
@@ -47,7 +45,6 @@ const FavoriteButton = ({movieId}: Props) => {
     }
 
     const handleRemove = async() => {
-      setHovered(false);
       await apiClient
       .post<FetchAddFavoriteResponse>(`/3/account/${account?.id}/favorite`,
           {
@@ -92,9 +89,7 @@ const FavoriteButton = ({movieId}: Props) => {
     >
       <div>
         <Icon
-          as={hovered ? IoHeartDislike : IoHeart}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
+          as={IoHeart}
           _hover={{ color: "white" }}
           aria-label="Remove from favorites"
           size="xl"

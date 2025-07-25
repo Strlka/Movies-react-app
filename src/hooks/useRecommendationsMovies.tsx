@@ -55,9 +55,11 @@ const fetchRecommendationsMovies = async (movieIds: number[]) => {
     });
 
     const filteredMovies = movieIds ? movies.filter(movie => !movieIds.includes(movie.id)) : movies;
+
+    const uniqueMovies = Array.from(new Map(filteredMovies.map(movie => [movie.id, movie])).values());
   
     return {
-      movies: filteredMovies,
+      movies: uniqueMovies,
       ...query
     }
   }

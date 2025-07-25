@@ -19,10 +19,7 @@ const Recommendations = ({favoriteMoviesIds, isLoading}: Props) => {
 
     const {movies, error, isLoading: isRecommendationsLoading} = useRecommendationsdMovies(favoriteMoviesIds);
 
-
     const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-    console.log(favoriteMoviesIds);
 
 
     if (error) return <Text>{error.message}</Text>;
@@ -32,7 +29,6 @@ const Recommendations = ({favoriteMoviesIds, isLoading}: Props) => {
         <Text 
             fontSize='2xl'
             fontWeight='bold'
-            color='white'
             marginTop={10}
             marginBottom={2}
         >

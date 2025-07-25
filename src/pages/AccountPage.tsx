@@ -16,12 +16,12 @@ const AccountPage = () => {
 
     const { data: account } = useAccount(sessionID || '');
 
-    if (!account) return null;
-
     const {movies: ratedMovies, isLoading: isRatedLoading} = useAllRatedMovies(undefined, account?.id, sessionID || '');
     const {movies, isLoading} = useAllFavoriteMovies(undefined, account?.id, sessionID || '');
 
     const favoriteMoviesIds = movies.map(movie => movie.id).slice(0, 10);
+
+    if (!account) return null;
 
     
   return (

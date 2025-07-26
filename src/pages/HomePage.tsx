@@ -8,15 +8,18 @@ import MovieHeading from "../components/MovieHeading";
 import { FaAnglesUp } from "react-icons/fa6";
 import GenreSelector from "../components/GerreSelector";
 
+
 const HomePage = () => {
     
-    const showAside = useBreakpointValue({ base: false, lg: true });
+    const showAside = useBreakpointValue({ base: false, lg: true }, { ssr: false });
     const showGenreSelector = useBreakpointValue({ base: true, lg: false });
 
     const [foudMoviesTotalResults,  setFoudMoviesTotalResults] = useState<number | ''>('');
     const [isShowScrollToTop, setShowScrollToTop] = useState(false);
   
     const mainRef = useRef<HTMLDivElement>(null);
+
+    
     const scrollToTop = () => {
       if (mainRef.current) {
         mainRef.current.scrollTo({ top: 0, behavior: 'smooth' });

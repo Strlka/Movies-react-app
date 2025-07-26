@@ -28,7 +28,17 @@ const date = new Date(movie.release_date);
         </Box>
       </Box>
       <CardBody flex="1" display="flex" flexDirection="column">
-        <Heading whiteSpace='normal' fontSize='xl' marginBottom={1} paddingTop='2' onClick={onClick} cursor='pointer' _hover={{color: 'teal.400' }}>{movie.title.length <= 42 ? movie.title : (movie.title.slice(0, 42) + '...') }</Heading>
+        <Heading 
+          whiteSpace='normal' 
+          fontSize='xl' 
+          marginBottom={1} 
+          paddingTop='2' 
+          onClick={onClick} 
+          cursor='pointer' 
+          _hover={{color: 'teal.400' }}
+        >
+          {movie.title.length <= 42 ? movie.title : (movie.title.slice(0, 42) + '...') }
+        </Heading>
         <Stack flex="1" display='flex' flexDirection='column' justify='flex-end'>
           <HStack justify='space-between' align="center">
             <Text paddingTop='3' marginBottom={2} fontSize='sm'>{date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>

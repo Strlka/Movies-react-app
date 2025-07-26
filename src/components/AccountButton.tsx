@@ -42,7 +42,9 @@ const AccountButton = () => {
       
       navigate('/')
       
-  }
+    }
+
+    if (!account) return null;
     
   return (
 
@@ -55,7 +57,7 @@ const AccountButton = () => {
         _hover={{color: 'teal.400' }}
         _focus={{ boxShadow: 'none', outline: 'none' }}
         _focusVisible={{ boxShadow: undefined, outline: undefined }} >
-        {account?.avatar.tmdb.avatar_path ? 
+        {account.avatar.tmdb.avatar_path ? 
             <Image
               src={getAvatarUrl(account?.avatar.tmdb.avatar_path)}
               boxSize="20px"
@@ -63,7 +65,7 @@ const AccountButton = () => {
               fit="cover"
               alt={account.username}
             /> : <Icon as={VscAccount} />}
-        Account
+        {account.username}
       </Button>
     </MenuTrigger>
     <Portal>

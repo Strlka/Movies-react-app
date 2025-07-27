@@ -14,10 +14,11 @@ interface Props {
     accountId: number
     sessionID: string | null
     showRatedmovies: boolean
+    mainRef: React.RefObject<HTMLDivElement>;
 }
 
 
-const FavoriteMoviesGrid = ({accountId, sessionID, showRatedmovies}: Props) => {
+const FavoriteMoviesGrid = ({accountId, sessionID, showRatedmovies, mainRef}: Props) => {
 
   const navigate = useNavigate();
     
@@ -67,7 +68,16 @@ const FavoriteMoviesGrid = ({accountId, sessionID, showRatedmovies}: Props) => {
         {(!isLoading && movies.length === 0) || (showRatedmovies && !ratedIsLoading && moviesWithRating.length === 0) && <Text>Movies not foud</Text>}
         {(showRatedmovies ? moviesWithRating : movies).map((movie) => (
           <MovieCardContainer key={`movie_${movie.id}`}>
-            <MovieCard movie={movie} genres={genres || []} onClick={() => navigate(`/movies/${movie.id}`)} />
+            <MovieCard 
+              movie={movie} 
+              genres={genres || []} 
+              onClick={() => {
+                if (mainRef.current) {
+                  sessionStorage.setItem('scrollPos:/', String(mainRef.current.scrollTop));
+                };
+                navigate(`/movies/${movie.id}`)} 
+              }
+            />
           </MovieCardContainer>
           ))}
         {(isLoading || isFetchingNextPage) || (ratedIsLoading || ratedIsFetchingNextPage) && skeletons.map((skeleton) => (

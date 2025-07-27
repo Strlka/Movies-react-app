@@ -2,11 +2,9 @@ import apiClient from '../services/api-client';
 import useAccount from '../hooks/useAccount';
 import { Icon, SkeletonCircle } from '@chakra-ui/react'
 import { IoHeart } from "react-icons/io5";
-import { IoHeartDislike } from "react-icons/io5";
 import { useQueryClient } from '@tanstack/react-query'
 import useAllFavoriteMovies from '../hooks/useAllFavoriteMovies';
 import { Tooltip } from './ui/tooltip';
-import { useState } from 'react';
 
 interface Props {
     movieId: number;

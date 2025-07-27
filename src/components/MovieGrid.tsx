@@ -13,10 +13,11 @@ import { useNavigate } from 'react-router-dom';
 
 interface Props {
   onTotalResultsChange: ((totalResults: number | '') => void);
+  mainRef: React.RefObject<HTMLDivElement>;
 }
 
 
-const MovieGrid = ({ onTotalResultsChange }: Props) => {
+const MovieGrid = ({ onTotalResultsChange, mainRef }: Props) => {
 
   const navigate = useNavigate();
 
@@ -74,7 +75,16 @@ const MovieGrid = ({ onTotalResultsChange }: Props) => {
           && <Text padding='10px'>Movies not foud</Text>}
         {(isSearching ? foundMovies : movies).map((movie) => (
           <MovieCardContainer key={isSearching ? `found_${movie.id}` : `movie_${movie.id}`}>
-            <MovieCard movie={movie} genres={genres || []} onClick={() => navigate(`movies/${movie.id}`)} />
+            <MovieCard 
+              movie={movie} 
+              genres={genres || []} 
+              onClick={() => {
+                if (mainRef.current) {
+                  sessionStorage.setItem('scrollPos:/', String(mainRef.current.scrollTop));
+                };
+                navigate(`movies/${movie.id}`)} 
+              }
+            />
           </MovieCardContainer>
           ))}
         {(isLoading || isSearchLoading || isFetchingNextPage || isFetchingSearchingNextPage) && skeletons.map((skeleton) => (

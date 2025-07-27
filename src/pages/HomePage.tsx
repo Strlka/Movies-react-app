@@ -38,6 +38,13 @@ const HomePage = () => {
       element.addEventListener("scroll", handleScroll);
       return () => element.removeEventListener("scroll", handleScroll);
     }, []);
+
+    useEffect(() => {
+      const saved = sessionStorage.getItem('scrollPos:/');
+      if (saved && mainRef.current) {
+        mainRef.current.scrollTop = Number(saved);
+      }
+    }, []); 
   
   
     return (
@@ -74,7 +81,7 @@ const HomePage = () => {
                 <SortSelector />
               </HStack>
             </Box>
-            <MovieGrid onTotalResultsChange={(totalResults: number | '') => setFoudMoviesTotalResults(totalResults)} />
+            <MovieGrid onTotalResultsChange={(totalResults: number | '') => setFoudMoviesTotalResults(totalResults)} mainRef={mainRef}/>
           </GridItem>
           {isShowScrollToTop && <IconButton 
             variant='subtle' 

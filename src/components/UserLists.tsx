@@ -43,6 +43,13 @@ const UserLists = () => {
     return () => element.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const saved = sessionStorage.getItem('scrollPos:/');
+    if (saved && mainRef.current) {
+      mainRef.current.scrollTop = Number(saved);
+    }
+  }, []); 
+
   if (!account) return null;
 
 
@@ -75,7 +82,7 @@ const UserLists = () => {
                 reSetShowRatedMovies={() => setShowRatedMovies(false)}
               />
             </Box>
-            <FavoriteMoviesGrid accountId={account.id} sessionID={sessionID} showRatedmovies={showRatedmovies}/>
+            <FavoriteMoviesGrid accountId={account.id} sessionID={sessionID} showRatedmovies={showRatedmovies} mainRef={mainRef}/>
           </GridItem>
           {isShowScrollToTop && <IconButton 
             variant='subtle' 

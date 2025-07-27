@@ -20,7 +20,7 @@ const date = new Date(movie.release_date);
   return (
     <Card.Root height="100%" display="flex" flexDirection="column">
       <Box position='relative' marginBottom={6}>
-        <AspectRatio ratio={3 / 5}>
+        <AspectRatio ratio={2 / 3}>
           <Image src={getImageUrl(movie.poster_path)} cursor='pointer' onClick={onClick} objectFit="cover"/>
         </AspectRatio>
         <Box position='absolute' left='50%' transform="translate(-50%, -35%)" zIndex="1">
@@ -28,9 +28,21 @@ const date = new Date(movie.release_date);
         </Box>
       </Box>
       <CardBody flex="1" display="flex" flexDirection="column">
+      <Box
+        position="absolute"
+        top="0"
+        left="0"
+        width="100%"
+        bg="rgba(0,0,0,0.8)"
+        color="white"
+        px={2}
+        py={2}
+        zIndex={2}
+        borderTopRadius="md"
+      >
         <Heading 
           whiteSpace='normal' 
-          fontSize='xl' 
+          fontSize='lg' 
           marginBottom={1} 
           paddingTop='2' 
           onClick={onClick} 
@@ -39,6 +51,7 @@ const date = new Date(movie.release_date);
         >
           {movie.title.length <= 42 ? movie.title : (movie.title.slice(0, 42) + '...') }
         </Heading>
+      </Box>
         <Stack flex="1" display='flex' flexDirection='column' justify='flex-end'>
           <HStack justify='space-between' align="center">
             <Text paddingTop='3' marginBottom={2} fontSize='sm'>{date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>

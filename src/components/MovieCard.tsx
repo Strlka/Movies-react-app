@@ -42,7 +42,8 @@ const date = new Date(movie.release_date);
       >
         <Heading 
           whiteSpace='normal' 
-          fontSize='lg' 
+          fontSize='xl'
+          textAlign='center' 
           marginBottom={1} 
           paddingTop='2' 
           onClick={onClick} 

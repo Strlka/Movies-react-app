@@ -52,7 +52,7 @@ const AccountButton = () => {
     <MenuTrigger asChild>
       <Button 
         variant='plain' 
-        size="lg" 
+        size="md" 
         borderRadius='5px' 
         _hover={{color: 'teal.400' }}
         _focus={{ boxShadow: 'none', outline: 'none' }}
@@ -60,7 +60,7 @@ const AccountButton = () => {
         {account.avatar.tmdb.avatar_path ? 
             <Image
               src={getAvatarUrl(account?.avatar.tmdb.avatar_path)}
-              boxSize="20px"
+              boxSize='20px'
               borderRadius="full"
               fit="cover"
               alt={account.username}

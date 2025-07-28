@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem, HStack, Icon, IconButton, useBreakpointValue } from "@chakra-ui/react"
+import { Box, Grid, GridItem, HStack, Icon, IconButton } from "@chakra-ui/react"
 import MovieGrid from "../components/MovieGrid";
 import GenreList from "../components/GenreList";
 import { useEffect, useRef, useState } from "react";
@@ -10,9 +10,6 @@ import GenreSelector from "../components/GerreSelector";
 
 
 const HomePage = () => {
-    
-    const showAside = useBreakpointValue({ base: false, lg: true }, { ssr: false });
-    const showGenreSelector = useBreakpointValue({ base: true, lg: false });
 
     const [foudMoviesTotalResults,  setFoudMoviesTotalResults] = useState<number | ''>('');
     const [isShowScrollToTop, setShowScrollToTop] = useState(false);
@@ -63,11 +60,9 @@ const HomePage = () => {
             lg: "auto 1fr",
           }}
         >
-          {showAside && (
-            <GridItem area="aside" paddingX="10px">
-              <GenreList />
-            </GridItem>
-          )}
+          <GridItem area="aside" paddingX="10px" hideBelow="lg">
+            <GenreList />
+          </GridItem>
           <GridItem 
             area="main" 
             overflowY="auto" 
@@ -76,7 +71,9 @@ const HomePage = () => {
             <Box paddingLeft={3}>
               <MovieHeading foudMoviesTotalResults={foudMoviesTotalResults} />
               <HStack gap={5} marginBottom={5} flexWrap='wrap'>
-                {showGenreSelector && <GenreSelector />}
+                <Box hideFrom='lg'>
+                  <GenreSelector />
+                </Box>
                 <ProviderSelector />
                 <SortSelector />
               </HStack>

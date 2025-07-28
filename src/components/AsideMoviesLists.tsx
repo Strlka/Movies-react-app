@@ -52,7 +52,7 @@ const AsideMoviesLists = ({showRatedmovies}: Props) => {
                 fontWeight: 'bold' 
                 }}
                 >
-                  {movie.title.length <= 42 ? movie.title : (movie.title.slice(0, 30) + '...') }
+                  {movie.title.length <= 42 ? movie.title : (movie.title.slice(0, 42) + '...') }
                 </Button>
             </List.Item>)}
         </List.Root>

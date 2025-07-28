@@ -1,4 +1,4 @@
-import { Grid, GridItem, IconButton, useBreakpointValue, Box, Icon } from '@chakra-ui/react';
+import { Grid, GridItem, IconButton, Box, Icon } from '@chakra-ui/react';
 import useAccount from '../hooks/useAccount'
 import { useEffect, useRef, useState } from 'react';
 import { FaAnglesUp } from 'react-icons/fa6';
@@ -16,7 +16,6 @@ const UserLists = () => {
 
   const {data: account, isLoading, error} = useAccount(sessionID || '');
 
-  const showAside = useBreakpointValue({ base: false, lg: true });
 
   const [showRatedmovies, setShowRatedMovies] = useState(false);
 
@@ -69,11 +68,9 @@ const UserLists = () => {
             lg: "auto 1fr",
           }}
         >
-          {showAside && (
-            <GridItem area="aside" paddingX="10px">
-              <AsideMoviesLists showRatedmovies={showRatedmovies} />
-            </GridItem>
-          )}
+          <GridItem area="aside" paddingX="10px" hideBelow="lg">
+            <AsideMoviesLists showRatedmovies={showRatedmovies} />
+          </GridItem>
           <GridItem area="main" overflowY="auto" ref={mainRef}>
             <Box paddingX="10px">
               <UserListsHeading

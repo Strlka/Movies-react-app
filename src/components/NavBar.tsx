@@ -27,7 +27,7 @@ const NavBar = () => {
         <Image
           src={logo}
           boxSize="60px"
-          onClick={() => {navigate('/'); resetSearching()}}
+          onClick={() => {navigate('/'); resetSearching(); sessionStorage.removeItem('scrollPos:/')}}
           cursor="pointer"
         />
         <Box display={{ base: 'none', lg: 'block' }} flex='1'>

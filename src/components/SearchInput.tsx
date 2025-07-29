@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const SearchInput = ({clearValue}: {clearValue: boolean}) => {
+const SearchInput = ({clearValue, onValueChange}: {clearValue: boolean, onValueChange: () => void}) => {
 
     const ref = useRef<HTMLInputElement>(null);
     const setSearchText = useMovieQueryStore(s => s.setSearchText);
@@ -41,10 +41,10 @@ const SearchInput = ({clearValue}: {clearValue: boolean}) => {
                 onChange={() => {
                     if (ref.current) {
                         setSearchText(ref.current.value);
+                        onValueChange();
                         navigate('/');
-                        }
-                    }
-                }
+                    };
+                }}
             />
         </InputGroup>
     </form>

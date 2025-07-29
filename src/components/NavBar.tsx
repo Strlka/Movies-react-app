@@ -7,16 +7,20 @@ import { useNavigate } from 'react-router-dom';
 import AccountButton from './AccountButton';
 import useMovieQueryStore from '../store';
 import { useState } from 'react';
+import SearchSuggestions from './SearchSuggestions';
 
 const NavBar = () => {
 
   const navigate = useNavigate();
 
+  const searchText = useMovieQueryStore(s => s.movieQuery.searchText);
   const resetSearching = useMovieQueryStore(s => s.resetSearchText);
 
   const sessionID = localStorage.getItem('session_id'); 
 
   const [clearValue, setClearValue] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
 
   return (
     <Stack
@@ -34,10 +38,17 @@ const NavBar = () => {
           onClick={() => {navigate('/'); resetSearching(); setClearValue(v => !v); sessionStorage.removeItem('scrollPos:/')}}
           cursor="pointer"
         />
-        <Box display={{ base: 'none', lg: 'block' }} flex='1'>
-          <SearchInput clearValue={clearValue}/>
+        <Box display={{ base: 'none', lg: 'block' }} flex='1' position='relative'>
+          <SearchInput clearValue={clearValue} onValueChange={() => setShowSuggestions(true)}/>
+          {(searchText && showSuggestions) 
+          && <SearchSuggestions 
+            searchText={searchText} 
+            onSuggestionClick={() => {
+              setShowSuggestions(false);
+              setClearValue(v => !v);
+            }}
+          />}
         </Box>
-
         <HStack>
           {!sessionID && <LoginButton />}
           {sessionID && <AccountButton />}
@@ -45,7 +56,15 @@ const NavBar = () => {
         </HStack>
       </HStack>
       <Box display={{ base: 'block', lg: 'none' }} width="100%">
-        <SearchInput clearValue={clearValue}/>
+        <SearchInput clearValue={clearValue} onValueChange={() => setShowSuggestions(true)}/>
+        {(searchText && showSuggestions) 
+        && <SearchSuggestions 
+          searchText={searchText} 
+          onSuggestionClick={() => {
+            setShowSuggestions(false);
+            setClearValue(v => !v);
+          }}
+        />}
       </Box>
     </Stack>
   );

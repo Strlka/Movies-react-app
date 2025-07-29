@@ -53,7 +53,6 @@ const date = new Date(movie.release_date);
           paddingTop={2} 
           onClick={onClick} 
           cursor='pointer' 
-          // _hover={{color: 'teal.400' }}
         >
           {movie.title.length <= 42 ? movie.title : (movie.title.slice(0, 30) + '...') }
         </Heading>

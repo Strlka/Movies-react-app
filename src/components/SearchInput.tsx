@@ -1,16 +1,23 @@
 import useMovieQueryStore from '../store';
 import { Icon, Input, InputGroup } from '@chakra-ui/react'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { BsSearch } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom';
 
 
 
-const SearchInput = () => {
+const SearchInput = ({clearValue}: {clearValue: boolean}) => {
 
     const ref = useRef<HTMLInputElement>(null);
     const setSearchText = useMovieQueryStore(s => s.setSearchText);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (ref.current) {
+            ref.current.value = '';
+            ref.current.blur();
+        }
+    }, [clearValue, ref.current]);
 
   return (
     <form onSubmit={(event) => {
@@ -31,6 +38,13 @@ const SearchInput = () => {
                 placeholder='Search movies...'
                 variant='subtle' 
                 fontSize='16px'
+                onChange={() => {
+                    if (ref.current) {
+                        setSearchText(ref.current.value);
+                        navigate('/');
+                        }
+                    }
+                }
             />
         </InputGroup>
     </form>

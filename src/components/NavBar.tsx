@@ -6,13 +6,17 @@ import LoginButton from './LoginButton';
 import { useNavigate } from 'react-router-dom';
 import AccountButton from './AccountButton';
 import useMovieQueryStore from '../store';
+import { useState } from 'react';
 
 const NavBar = () => {
+
   const navigate = useNavigate();
 
   const resetSearching = useMovieQueryStore(s => s.resetSearchText);
 
   const sessionID = localStorage.getItem('session_id'); 
+
+  const [clearValue, setClearValue] = useState(false);
 
   return (
     <Stack
@@ -27,11 +31,11 @@ const NavBar = () => {
         <Image
           src={logo}
           boxSize="60px"
-          onClick={() => {navigate('/'); resetSearching(); sessionStorage.removeItem('scrollPos:/')}}
+          onClick={() => {navigate('/'); resetSearching(); setClearValue(v => !v); sessionStorage.removeItem('scrollPos:/')}}
           cursor="pointer"
         />
         <Box display={{ base: 'none', lg: 'block' }} flex='1'>
-          <SearchInput />
+          <SearchInput clearValue={clearValue}/>
         </Box>
 
         <HStack>
@@ -41,7 +45,7 @@ const NavBar = () => {
         </HStack>
       </HStack>
       <Box display={{ base: 'block', lg: 'none' }} width="100%">
-        <SearchInput />
+        <SearchInput clearValue={clearValue}/>
       </Box>
     </Stack>
   );

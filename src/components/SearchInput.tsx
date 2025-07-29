@@ -4,9 +4,15 @@ import { useEffect, useRef } from 'react'
 import { BsSearch } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom';
 
+interface Props {
+    clearValue: boolean;
+    onValueChange: () => void;
+    onSearchClick: () => void;
+}
 
 
-const SearchInput = ({clearValue, onValueChange}: {clearValue: boolean, onValueChange: () => void}) => {
+
+const SearchInput = ({clearValue, onValueChange, onSearchClick}: Props) => {
 
     const ref = useRef<HTMLInputElement>(null);
     const setSearchText = useMovieQueryStore(s => s.setSearchText);
@@ -26,6 +32,7 @@ const SearchInput = ({clearValue, onValueChange}: {clearValue: boolean, onValueC
             setSearchText(ref.current.value);
             navigate('/');
             ref.current.value = '';
+            onSearchClick();
             ref.current.blur();
         }
     }}>

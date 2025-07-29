@@ -6,10 +6,10 @@ import { useColorModeValue } from "./ui/color-mode";
 
 interface Props {
     searchText?: string;
-    onSuggestionClick: () => void;
+    onHideSuggestions: () => void;
 }
 
-const SearchSuggestions = ({searchText, onSuggestionClick}: Props) => {
+const SearchSuggestions = ({searchText, onHideSuggestions}: Props) => {
 
     const { data: foundResults, isLoading: isSearchLoading } = useSearchMovies(searchText);
 
@@ -45,7 +45,7 @@ const SearchSuggestions = ({searchText, onSuggestionClick}: Props) => {
                         textAlign='left' 
                         onClick={() => {
                             setSearchText(movie.title);
-                            onSuggestionClick();
+                            onHideSuggestions();
                         }} 
                         variant='plain' 
                         fontSize='md' height='auto' 
@@ -56,7 +56,7 @@ const SearchSuggestions = ({searchText, onSuggestionClick}: Props) => {
                     </Button>
             </List.Item>) : <List.Item>Movies not foud</List.Item>}
         </List.Root>
-        <CloseButton size="xs" variant='plain' alignSelf='flex-start' onClick={() => onSuggestionClick()}/>
+        <CloseButton size="xs" variant='plain' alignSelf='flex-start' onClick={() => onHideSuggestions()}/>
       </HStack>
     </Box>
   )

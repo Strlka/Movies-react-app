@@ -39,11 +39,15 @@ const NavBar = () => {
           cursor="pointer"
         />
         <Box display={{ base: 'none', lg: 'block' }} flex='1' position='relative'>
-          <SearchInput clearValue={clearValue} onValueChange={() => setShowSuggestions(true)}/>
+          <SearchInput 
+            clearValue={clearValue} 
+            onValueChange={() => setShowSuggestions(true)} 
+            onSearchClick={() => setShowSuggestions(false)}
+          />
           {(searchText && showSuggestions) 
           && <SearchSuggestions 
             searchText={searchText} 
-            onSuggestionClick={() => {
+            onHideSuggestions={() => {
               setShowSuggestions(false);
               setClearValue(v => !v);
             }}
@@ -56,11 +60,15 @@ const NavBar = () => {
         </HStack>
       </HStack>
       <Box display={{ base: 'block', lg: 'none' }} width="100%">
-        <SearchInput clearValue={clearValue} onValueChange={() => setShowSuggestions(true)}/>
+        <SearchInput
+          clearValue={clearValue} 
+          onValueChange={() => setShowSuggestions(true)} 
+          onSearchClick={() => setShowSuggestions(false)}
+        />
         {(searchText && showSuggestions) 
         && <SearchSuggestions 
           searchText={searchText} 
-          onSuggestionClick={() => {
+          onHideSuggestions={() => {
             setShowSuggestions(false);
             setClearValue(v => !v);
           }}

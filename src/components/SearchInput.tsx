@@ -17,7 +17,7 @@ const SearchInput = ({clearValue}: {clearValue: boolean}) => {
             ref.current.value = '';
             ref.current.blur();
         }
-    }, [clearValue, ref.current]);
+    }, [clearValue]);
 
   return (
     <form onSubmit={(event) => {

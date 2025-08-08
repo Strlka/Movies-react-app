@@ -59,7 +59,7 @@ const MovieGrid = ({ onTotalResultsChange, mainRef }: Props) => {
 
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-  if (error) return <Text>{error.message}</Text>;
+  if (error) return <Text padding='10px'>{error.message}</Text>;
 
   return (
     <>

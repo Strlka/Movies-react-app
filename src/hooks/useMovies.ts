@@ -27,6 +27,9 @@ interface FetchMoviesResponse {
 const useMovies = () => {
 
     const movieQuery = useMovieQueryStore(s => s.movieQuery);
+    const dateNow = new Date();
+    const date = dateNow.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+
 
     return useInfiniteQuery({
     queryKey: ['movies', movieQuery],
@@ -38,6 +41,8 @@ const useMovies = () => {
             params.watch_region = 'US';
         }
         if (movieQuery.selectorParam) params.sort_by = movieQuery.selectorParam;
+        if (!movieQuery.selectorParam) params.sort_by = 'vote_count.desc';
+        params['release_date.lte'] = date;
         return apiClient
             .get<FetchMoviesResponse>('/3/discover/movie', {params: {page: pageParam, ...params}})
             .then(res => res.data)
